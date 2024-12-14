@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='members.css') }}"> 
     <title>Members List</title>
 </head>
 <body>
@@ -10,39 +11,40 @@
     <a href="/add_member">
         <button>Add New Member</button>
     </a>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Email</th>
-                <th>Rôle</th>
-                <th>Club ID</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for member in members %}
-            <tr>
-                <td>{{ member.Membre_id }}</td>
-                <td>{{ member.Nom }}</td>
-                <td>{{ member.Prenom }}</td>
-                <td>{{ member.Email }}</td>
-                <td>{{ member.Role }}</td>
-                <td>{{ member.Club_id}}</td>
-                <td>
-                    <a href="/edit_member/{{ member.Membre_id }}">
-                        <button>Edit</button>
-                    </a>
-                </td>
-                <td>
-                    <a href="/delete_member/{{ member.Membre_id }}">
-                        <button onclick="confirm('Are you sure you want to delete that member ?')">Delete</button>
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Email</th>
+                    <th>Rôle</th>
+                    <th>Club ID</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for member in members %}
+                <tr>
+                    <td>{{ member.Membre_id }}</td>
+                    <td>{{ member.Nom }}</td>
+                    <td>{{ member.Prenom }}</td>
+                    <td>{{ member.Email }}</td>
+                    <td>{{ member.Role }}</td>
+                    <td>{{ member.Club_id}}</td>
+                    <td>
+                        <a href="/edit_member/{{ member.Membre_id }}">
+                            <button class="edit">Edit</button>
+                        </a>
+                        <a href="/delete_member/{{ member.Membre_id }}">
+                            <button class="delete" onclick="confirm('Are you sure you want to delete that member ?')">Delete</button>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
