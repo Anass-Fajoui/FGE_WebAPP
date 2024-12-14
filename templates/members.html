@@ -10,7 +10,7 @@
 <body>
     <h1>Members List</h1>
     <a href="/add_member">
-        <button>Add New Member</button>
+        <button><i class="fa-solid fa-user-plus"></i> Add New Member</button>
     </a>
     <div class="container">
         <table>
@@ -21,8 +21,8 @@
                     <th>Prénom</th>
                     <th>Email</th>
                     <th>Rôle</th>
-                    <th>Club ID</th>
-                    <th>Actions</th>
+                    <th>Club</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -33,13 +33,23 @@
                     <td>{{ member.Prenom }}</td>
                     <td>{{ member.Email }}</td>
                     <td>{{ member.Role }}</td>
-                    <td>{{ member.Club_id}}</td>
                     <td>
+                        {% if member.Club_id == 1 %}
+                        FGE Inpt
+                        {% elif member.Club_id == 2 %}
+                        FGE Ensias
+                        {% elif member.Club_id == 3 %}
+                        FGE Insea
+                        {% else %}
+                          Unknown Club
+                        {% endif %}
+                      </td>
+                    <td  class="btns">
                         <a href="/edit_member/{{ member.Membre_id }}">
-                            <button class="edit">Edit</button>
+                            <button class="edit"><i class="fa-solid fa-pen-to-square"></i></button>
                         </a>
                         <a href="/delete_member/{{ member.Membre_id }}">
-                            <button class="delete" onclick="confirm('Are you sure you want to delete that member ?')">Delete</button>
+                            <button class="delete" onclick="confirm('Are you sure you want to delete that member ?')"><i class="fa-solid fa-trash"></i></button>
                         </a>
                     </td>
                 </tr>

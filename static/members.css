@@ -46,7 +46,10 @@ th {
     padding: 15px;
     background-color: #f2f2f2;
 }
-
+td.btns{
+    display: flex;
+    justify-content: space-around;
+}
 button {
     padding: 0.75rem 1.5rem;
     border: none;
@@ -58,6 +61,7 @@ button {
 }
 h1 + a{
     margin-bottom: 20px;
+    
 }
 td a:first-child button{
     background-color: blue;
@@ -69,10 +73,6 @@ button:hover {
     filter: brightness(0.9);
 }
 
-
-/* button:hover {
-    filter: brightness(0.9);
-} */
 a {
     text-decoration: none;
     color: #333;
