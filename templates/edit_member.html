@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit a Member</title>
+</head>
+<body>
+    <h1>Edit a Member</h1>
+    <form method="POST">
+        <label for="Nom">Nom:</label>
+        <input type="text" name="Nom" value="{{ member.Nom }}" required><br>
+
+        <label for="Prenom">Prénom:</label>
+        <input type="text" name="Prenom" value="{{ member.Prenom }}" required><br>
+
+        <label for="Email">Email:</label>
+        <input type="email" name="Email" value="{{ member.Email }}" required><br>
+
+        <label for="Role">Rôle:</label>
+        <select id="role" name="Role" required>
+            <option value="Président" {% if member.Role == 'President' %}selected{% endif %}>Président</option>
+            <option value="Vice-Président" {% if member.Role == 'Vice-Président' %}selected{% endif %}>Vice-Président</option>
+            <option value="Secrétaire Général" {% if member.Role == 'Secrétaire Général' %}selected{% endif %}>Secrétaire Général</option>
+            <option value="Trésorier" {% if member.Role == 'Trésorier' %}selected{% endif %}>Trésorier</option>
+            <option value="Membre" {% if member.Role == 'Membre' %}selected{% endif %}>Membre</option>
+        </select><br>
+        <label for="Club_id">Club ID:</label>
+
+        <input type="number" name="Club_id" value="{{ member.Club_id }}" required><br>
+
+        <button type="submit">Edit</button>
+    </form>
+</body>
+</html>

@@ -7,6 +7,9 @@
 </head>
 <body>
     <h1>Members List</h1>
+    <a href="/add_member">
+        <button>Add New Member</button>
+    </a>
     <table border="1">
         <thead>
             <tr>
@@ -15,6 +18,7 @@
                 <th>Prénom</th>
                 <th>Email</th>
                 <th>Rôle</th>
+                <th>Club ID</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +29,17 @@
                 <td>{{ member.Prenom }}</td>
                 <td>{{ member.Email }}</td>
                 <td>{{ member.Role }}</td>
+                <td>{{ member.Club_id}}</td>
+                <td>
+                    <a href="/edit_member/{{ member.Membre_id }}">
+                        <button>Edit</button>
+                    </a>
+                </td>
+                <td>
+                    <a href="/delete_member/{{ member.Membre_id }}">
+                        <button>Delete</button>
+                    </a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

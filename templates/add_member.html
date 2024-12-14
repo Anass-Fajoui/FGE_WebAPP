@@ -8,18 +8,30 @@
 <body>
     <h1>Add New Member</h1>
     <form method="POST">
-        <label for="Membre_id">Nom:</label>
+        <label for="Membre_id">Id:</label>
         <input type="number" name="Membre_id" required><br>
+
         <label for="Nom">Nom:</label>
         <input type="text" name="Nom" required><br>
+
         <label for="Prenom">Prénom:</label>
         <input type="text" name="Prenom" required><br>
+
         <label for="Email">Email:</label>
         <input type="email" name="Email" required><br>
+
         <label for="Role">Rôle:</label>
-        <input type="text" name="Role" required><br>
+        <select id="role" name="Role" required>
+            <option value="Président">Président</option>
+            <option value="Vice-Président">Vice-Président</option>
+            <option value="Secrétaire Général">Secrétaire Général</option>
+            <option value="Trésorier">Trésorier</option>
+            <option value="Membre">Membre</option>
+        </select><br>
+
         <label for="Club_id">Club ID:</label>
         <input type="number" name="Club_id" required><br>
+        
         <button type="submit">Add Member</button>
     </form>
 </body>
