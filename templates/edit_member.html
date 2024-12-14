@@ -27,8 +27,12 @@
         </select><br>
         <label for="Club_id">Club ID:</label>
 
-        <input type="number" name="Club_id" value="{{ member.Club_id }}" required><br>
-
+        <!-- <input type="number" name="Club_id" value="{{ member.Club_id }}" required><br> -->
+        <select name="Club_id" id="Club_id">
+            <option value="1" {% if member.Club_id == 1 %}selected{% endif %}>FGE Inpt</option>
+            <option value="2" {% if member.Club_id == 2 %}selected{% endif %}>FGE Ensias</option>
+            <option value="3" {% if member.Club_id == 3 %}selected{% endif %}>FGE Insea</option>
+        </select>
         <button type="submit">Edit</button>
     </form>
 </body>

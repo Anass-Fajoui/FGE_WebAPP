@@ -8,30 +8,46 @@
 <body>
     <h1>Add New Member</h1>
     <form method="POST">
-        <label for="Membre_id">Id:</label>
-        <input type="number" name="Membre_id" required><br>
+        <div>
+            <label for="Membre_id">Id:</label>
+            <input type="number" name="Membre_id" required>
+        </div>
 
-        <label for="Nom">Nom:</label>
-        <input type="text" name="Nom" required><br>
+        <div>
+            <label for="Nom">Nom:</label>
+            <input type="text" name="Nom" required>
+        </div>
 
-        <label for="Prenom">Prénom:</label>
-        <input type="text" name="Prenom" required><br>
+        <div>
+            <label for="Prenom">Prénom:</label>
+            <input type="text" name="Prenom" required>
+        </div>
 
-        <label for="Email">Email:</label>
-        <input type="email" name="Email" required><br>
+        <div>
+            <label for="Email">Email:</label>
+            <input type="email" name="Email" required>
+        </div>
 
-        <label for="Role">Rôle:</label>
-        <select id="role" name="Role" required>
-            <option value="Membre">Membre</option>
-            <option value="Président">Président</option>
-            <option value="Vice-Président">Vice-Président</option>
-            <option value="Secrétaire Général">Secrétaire Général</option>
-            <option value="Trésorier">Trésorier</option>
-        </select><br>
+        <div>
+            <label for="Role">Rôle:</label>
+            <select id="role" name="Role" required>
+                <option value="Membre">Membre</option>
+                <option value="Président">Président</option>
+                <option value="Vice-Président">Vice-Président</option>
+                <option value="Secrétaire Général">Secrétaire Général</option>
+                <option value="Trésorier">Trésorier</option>
+            </select><br>
+        </div>
 
-        <label for="Club_id">Club ID:</label>
-        <input type="number" name="Club_id" required><br>
-        
+        <div>
+            <label for="Club_id">Club ID:</label>
+            <!-- <input type="number" name="Club_id" required><br> -->
+            <select id="Club_id" name="Club_id" required>
+                <option value="1">FGE Inpt</option>
+                <option value="2">FGE Ensias</option>
+                <option value="3">FGE Insea</option>
+            </select><br>
+        </div>
         <button type="submit">Add Member</button>
     </form>
 </body>
