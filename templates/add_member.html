@@ -7,6 +7,7 @@
     <title>Add Member</title>
 </head>
 <body>
+    
     <h1>Add New Member</h1>
     <div class="container">
         <form method="POST">
@@ -52,5 +53,16 @@
             <button type="submit">Add Member</button>
         </form>
     </div>
+
+
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <script>
+                window.alert("{{ messages[0] }}");
+            </script>
+        {% endif %}
+    {% endwith %}
+    
 </body>
 </html>
