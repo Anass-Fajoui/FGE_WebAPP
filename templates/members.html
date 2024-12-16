@@ -40,7 +40,7 @@
             
         </div>
         <div class="search-bar">
-            <a href="/add_member">
+            <a href="/members/add_member">
                 <button class="add-btn"><i class="fa-solid fa-user-plus"></i> Add New Member</button>
             </a>
             <form method="GET" action="/members">
@@ -81,10 +81,10 @@
                             {% endif %}
                         </td>
                         <td class="btns">
-                            <a href="/edit_member/{{ member.Membre_id }}">
+                            <a href="/members/edit_member/{{ member.Membre_id }}">
                                 <button class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
                             </a>
-                            <a href="/delete_member/{{ member.Membre_id }}">
+                            <a href="/members/delete_member/{{ member.Membre_id }}">
                                 <button class="delete-btn" onclick="return confirm('Are you sure you want to delete that member?')"><i class="fa-solid fa-trash"></i></button>
                             </a>
                         </td>

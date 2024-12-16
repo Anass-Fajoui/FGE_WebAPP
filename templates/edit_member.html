@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='edit_member.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.min.css" rel="stylesheet">
     <title>Edit a Member</title>
 </head> 
 <body>
@@ -43,10 +44,23 @@
                     <option value="2" {% if member.Club_id == 2 %}selected{% endif %}>FGE Ensias</option>
                     <option value="3" {% if member.Club_id == 3 %}selected{% endif %}>FGE Insea</option>
                 </select>
-            </div>
+            </div> 
 
             <button type="submit">Edit Member</button>
         </form>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.all.min.js"></script>
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <script>
+               Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "{{ messages[0]}}"
+                    });
+            </script>
+        {% endif %}
+    {% endwith %}
 </body>
 </html>

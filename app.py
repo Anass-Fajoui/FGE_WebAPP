@@ -44,7 +44,7 @@ def list_members():
     return render_template('members.html', members=members)
 
 # Route to add a new member
-@app.route('/add_member', methods=['GET', 'POST'])
+@app.route('/members/add_member', methods=['GET', 'POST'])
 def add_member():
     if request.method == 'POST':
         # Get data from the form
@@ -60,19 +60,19 @@ def add_member():
 
         if existing_member:
             flash('A member with this ID already exists.', 'error')
-            return redirect('/add_member')  # Redirect back to the form to correct the input
+            return redirect('/members/add_member')  # Redirect back to the form to correct the input
         
         if len(nom) > 50:
             flash("The name cannot be longer than 50 characters.", 'error')
-            return redirect('/add_member')
+            return redirect('/members/add_member')
         
         if len(prenom) > 50:
             flash("The prénom cannot be longer than 50 characters.", 'error')
-            return redirect('/add_member')
+            return redirect('/members/add_member')
         
         if len(email) > 50:
             flash("The email cannot be longer than 50 characters.", 'error')
-            return redirect('/add_member')
+            return redirect('/members/add_member')
         try:
             # Add new member to the database
             new_member = Membre(Membre_id=id, Nom=nom, Prenom=prenom, Email=email, Role=role, Club_id=club_id)
@@ -85,7 +85,7 @@ def add_member():
         except Exception as e:
             db.session.rollback()  # Rollback in case of error
             flash(f'An error occurred: {str(e)}', 'error')  # Display error message
-            return redirect('/add_member')
+            return redirect('/members/add_member')
         
         return redirect('/members')
     
@@ -93,24 +93,49 @@ def add_member():
 
 
 # Route to delete a member
-@app.route('/edit_member/<int:id>', methods=['GET', 'POST'])
+@app.route('/members/edit_member/<int:id>', methods=['GET', 'POST'])
 def edit_member(id):
     member = Membre.query.get(id)
     
     if request.method == 'POST':
-        member.Nom = request.form['Nom']
-        member.Prenom = request.form['Prenom']
-        member.Email = request.form['Email']
-        member.Role = request.form['Role']
-        member.Club_id = request.form['Club_id']
+        Nom = request.form['Nom']
+        Prenom = request.form['Prenom']
+        Email = request.form['Email']
+        Role = request.form['Role']
+        Club_id = request.form['Club_id']
         
-        db.session.commit()
-        flash('Member updated successfully', 'success')
+        member.Nom = Nom
+        member.Prenom = Prenom
+        member.Email = Email
+        member.Role = Role
+        member.Club_id = Club_id
+
+        if len(Nom) > 50:
+            flash("The name cannot be longer than 50 characters.", 'error')
+            return redirect('/members/edit_member/' + str(id))
+        
+        if len(Prenom) > 50:
+            flash("The prénom cannot be longer than 50 characters.", 'error')
+            return redirect('/members/edit_member/' + str(id))
+        
+        if len(Email) > 100:
+            flash("The email cannot be longer than 50 characters.", 'error')
+            return redirect('/members/edit_member/' + str(id))
+        
+        try : 
+            db.session.commit()
+            flash('Member updated successfully', 'success')
+        except Exception as e:
+            db.session.rollback()  # Rollback in case of error
+            flash(f'An error occurred: {str(e)}', 'error')  # Display error message
+            return redirect('/members/edit_member/' + str(id))
+        
+        
         return redirect('/members')  # Redirect to the members list
     
     return render_template('edit_member.html', member=member)
 
-@app.route('/delete_member/<int:id>', methods=['GET', 'POST'])
+@app.route('/members/delete_member/<int:id>', methods=['GET', 'POST'])
 def delete_member(id):
     member = Membre.query.get(id)
     db.session.delete(member)
