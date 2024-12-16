@@ -75,6 +75,7 @@ body {
     align-items: center;
     margin-bottom: 10px ;
 }
+
 .search-bar input {
     padding: 0.7rem;
     border: 1px solid #ddd;
@@ -83,9 +84,12 @@ body {
     width: 300px;
     border-radius: 20px;
 }
+.search-bar input:focus {
+    border-color: #495057;
+}
 
 .search-bar form button {
-    background-color: #17a2b8;
+    background-color: #495057   ;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -160,20 +164,36 @@ button {
 
 .add-btn {
     background-color: #4CAF50;
+    border-radius: 20px;
+    padding: 10px 12px;
+    transition-duration: 0.3s;
+}
+.add-btn:hover {
+    background-color: #45a049;
 }
 
 .edit-btn {
+    transition-duration: 0.3s;
     background-color: #17a2b8;
+}
+.edit-btn:hover {
+    background-color: #138496;
 }
 
 .delete-btn {
+    transition-duration: 0.3s;
     background-color: #dc3545;
 }
-
-button:hover {
-    filter: brightness(0.9);
+.delete-btn:hover {
+    background-color: #c82333;
 }
 
+/* button:hover {
+    filter: brightness(0.9);
+} */
+tr{
+    transition-duration: 0.3s;
+}
 tr:hover {
     background-color: #f9f9f9;
 }
