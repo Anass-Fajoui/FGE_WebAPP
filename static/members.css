@@ -37,6 +37,12 @@ body {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+.sidebar-menu li a {
+    display: inline-block;
+    width: 100%;
+    color: white;
+    text-decoration: none;
+}
 
 .sidebar-menu li:hover {
     background-color: #444;
@@ -58,12 +64,38 @@ body {
 }
 
 .content-header {
+    /* display: flex;
+    justify-content: space-between;
+    align-items: center; */
+    margin-bottom: 20px;
+}
+.search-bar{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px ;
+}
+.search-bar input {
+    padding: 0.7rem;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    outline: none;
+    width: 300px;
+    border-radius: 20px;
 }
 
+.search-bar form button {
+    background-color: #17a2b8;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 35px;
+    height: 35px ;
+    padding: 5px;
+    border-radius: 50%;
+
+}
 .container {
     background-color: #fff;
     border: 1px solid #ddd;

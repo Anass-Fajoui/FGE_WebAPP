@@ -6,8 +6,8 @@ class Membre(db.Model):
     __tablename__ = 'Membre'
 
     Membre_id = db.Column(db.Integer, primary_key=True)
-    Nom = db.Column(db.String(100))
-    Prenom = db.Column(db.String(100))
+    Nom = db.Column(db.String(50))
+    Prenom = db.Column(db.String(50))
     Email = db.Column(db.String(100))
     Role = db.Column(db.String(100))
     Club_id = db.Column(db.Integer)

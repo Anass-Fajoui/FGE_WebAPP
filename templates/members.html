@@ -6,40 +6,48 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <title>Members List</title>
     <link rel="stylesheet" href="../static/members.css">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.min.css" rel="stylesheet">
+
 </head>
 <body>
     <div class="sidebar">
         <div class="sidebar-logo">Dashboard</div>
         <ul class="sidebar-menu">
             <li class="active">
-                <i class="fas fa-users"></i> Members
+                <a href="/members"><i class="fas fa-users"></i> Members</a>
             </li>
             <li>
-                <i class="fas fa-handshake"></i> Sponsors
+                <a href=""><i class="fas fa-handshake"></i> Sponsors</a>
             </li>
             <li>
-                <i class="fas fa-user-friends"></i> Participants
+                <a href=""><i class="fas fa-user-friends"></i> Participants</a>
             </li>
             <li>
-                <i class="fas fa-calendar-alt"></i> Events
+                <a href=""><i class="fas fa-calendar-alt"></i> Events</a>
             </li>
             <li>
-                <i class="fas fa-chart-pie"></i> Analytics
+                <a href=""><i class="fas fa-chart-pie"></i> Analytics</a>
             </li>
             <li>
-                <i class="fas fa-cog"></i> Logout
+                <a href=""><i class="fas fa-cog"></i> Logout</a>
             </li>
         </ul>
     </div>
 
     <div class="main-content">
         <div class="content-header">
-            <h1>Gérere les membres</h1>
+            <h1>Gérerer les membres</h1>
+            
+        </div>
+        <div class="search-bar">
             <a href="/add_member">
                 <button class="add-btn"><i class="fa-solid fa-user-plus"></i> Add New Member</button>
             </a>
+            <form method="GET" action="/members">
+                <input type="text" name="search" placeholder="Rechercher par nom ou email" value="{{ request.args.get('search', '') }}">
+                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
         </div>
-        
         <div class="container">
             <table>
                 <thead>
@@ -81,10 +89,29 @@
                             </a>
                         </td>
                     </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding:20px">Aucun membre</td>
+                    </tr>
                     {% endfor %}
+                    
                 </tbody>
             </table>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.all.min.js"></script>
+
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <script>
+               Swal.fire({
+                title: "Done",
+                text: "{{ messages[0] }}",
+                icon: "success"
+                });
+            </script>
+        {% endif %}
+    {% endwith %}
 </body>
 </html>

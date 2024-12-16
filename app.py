@@ -27,7 +27,20 @@ def test():
 # Route to list all members
 @app.route('/members')
 def list_members():
-    members = Membre.query.all()  # Get all members from the database
+    search_query = request.args.get('search', '')
+
+    # Query the database based on the search query
+    if search_query:
+        # Search by name (first name or last name) or email
+        members = Membre.query.filter(
+            (Membre.Nom.like(f'%{search_query}%')) |
+            (Membre.Prenom.like(f'%{search_query}%')) |
+            (Membre.Email.like(f'%{search_query}%'))
+        ).all()
+    else:
+        # If no search query, return all members
+        members = Membre.query.all()
+    
     return render_template('members.html', members=members)
 
 # Route to add a new member
@@ -44,23 +57,37 @@ def add_member():
         
         # Check if the member ID already exists in the database
         existing_member = Membre.query.filter_by(Membre_id=id).first()
+
         if existing_member:
             flash('A member with this ID already exists.', 'error')
             return redirect('/add_member')  # Redirect back to the form to correct the input
-
+        
+        if len(nom) > 50:
+            flash("The name cannot be longer than 50 characters.", 'error')
+            return redirect('/add_member')
+        
+        if len(prenom) > 50:
+            flash("The prénom cannot be longer than 50 characters.", 'error')
+            return redirect('/add_member')
+        
+        if len(email) > 50:
+            flash("The email cannot be longer than 50 characters.", 'error')
+            return redirect('/add_member')
         try:
             # Add new member to the database
             new_member = Membre(Membre_id=id, Nom=nom, Prenom=prenom, Email=email, Role=role, Club_id=club_id)
             db.session.add(new_member)
             db.session.commit()
             
-            
-            return redirect('/members')  # Redirect to the members list
+            flash("Member added succesfully", 'success')
+              # Redirect to the members list
         
         except Exception as e:
             db.session.rollback()  # Rollback in case of error
             flash(f'An error occurred: {str(e)}', 'error')  # Display error message
             return redirect('/add_member')
+        
+        return redirect('/members')
     
     return render_template('add_member.html')
 
@@ -78,6 +105,7 @@ def edit_member(id):
         member.Club_id = request.form['Club_id']
         
         db.session.commit()
+        flash('Member updated successfully', 'success')
         return redirect('/members')  # Redirect to the members list
     
     return render_template('edit_member.html', member=member)
@@ -87,6 +115,7 @@ def delete_member(id):
     member = Membre.query.get(id)
     db.session.delete(member)
     db.session.commit()
+    flash('Member deleted successfully', 'success')
     return redirect('/members')
 
 
