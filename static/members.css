@@ -83,7 +83,7 @@ th, td {
     padding: 8px;
     text-align: left;
     border: 1px solid #ddd;
-    max-width: 250px;
+    max-width: 350px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -101,6 +101,14 @@ th:nth-child(4), td:nth-child(4) { width: 160px; }
 th:nth-child(5), td:nth-child(5) { width: 89px; }
 th:nth-child(6), td:nth-child(6) { width: 65px; }
 th:nth-child(7), td:nth-child(7) { width: 70px;}  */
+.nomCol{
+    max-width: 150px;
+
+}
+.prenomCol{
+    max-width: 150px;
+    
+}
 
 
 .btns{

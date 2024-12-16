@@ -3,11 +3,15 @@ from flask_sqlalchemy import SQLAlchemy
 from models import db, Membre
 
 app = Flask(__name__)
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 # Replace 'username', 'password', 'localhost', 'dbname' with your MySQL credentials and database details
 app.config['SECRET_KEY'] = 'AnassLpro165'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:anasslpro@localhost/fge'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+
+
 
 db.init_app(app)
 
@@ -15,6 +19,10 @@ db.init_app(app)
 @app.route('/')
 def home():
     return render_template('home.html')
+
+@app.route('/test')
+def test():
+    return render_template('test.html')
 
 # Route to list all members
 @app.route('/members')

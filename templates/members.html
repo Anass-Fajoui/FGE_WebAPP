@@ -34,34 +34,34 @@
 
     <div class="main-content">
         <div class="content-header">
-            <h1>Members List</h1>
+            <h1>Gérere les membres</h1>
             <a href="/add_member">
                 <button class="add-btn"><i class="fa-solid fa-user-plus"></i> Add New Member</button>
             </a>
         </div>
-
+        
         <div class="container">
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Email</th>
-                        <th>Rôle</th>
-                        <th>Club</th>
+                        <th class="idCol">ID</th>
+                        <th class="nomCol">Nom</th>
+                        <th class="prenomCol">Prénom</th>
+                        <th class="emailCol">Email</th>
+                        <th class="roleCol">Rôle</th>
+                        <th class="clubCol">Club</th>
                         <th class="btns"></th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for member in members %}
                     <tr>
-                        <td>{{ member.Membre_id }}</td>
-                        <td>{{ member.Nom }}</td>
-                        <td>{{ member.Prenom }}</td>
-                        <td>{{ member.Email }}</td>
-                        <td>{{ member.Role }}</td>
-                        <td>
+                        <td class="idCol">{{ member.Membre_id }}</td>
+                        <td class="nomCol">{{ member.Nom }}</td>
+                        <td class="prenomCol">{{ member.Prenom }}</td>
+                        <td class="emailCol">{{ member.Email }}</td>
+                        <td class="roleCol">{{ member.Role }}</td>
+                        <td class="clubCol">
                             {% if member.Club_id == 1 %}
                             FGE Inpt
                             {% elif member.Club_id == 2 %}
