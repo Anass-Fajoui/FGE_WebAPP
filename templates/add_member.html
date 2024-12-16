@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='add_member.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.min.css" rel="stylesheet">
+
     <title>Add Member</title>
 </head>
 <body>
@@ -54,12 +56,17 @@
         </form>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.all.min.js"></script>
 
     
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <script>
-                window.alert("{{ messages[0] }}");
+               Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "{{ messages[0] }}"
+                    });
             </script>
         {% endif %}
     {% endwith %}
