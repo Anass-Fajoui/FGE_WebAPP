@@ -15,28 +15,28 @@
                 <label for="Nom">Nom:</label>
                 <input type="text" name="Nom" value="{{ member.Nom }}" required>
             </div>
-
+        
             <div class="form-group">
                 <label for="Prenom">Prénom:</label>
                 <input type="text" name="Prenom" value="{{ member.Prenom }}" required>
             </div>
-
+        
             <div class="form-group">
                 <label for="Email">Email:</label>
                 <input type="email" name="Email" value="{{ member.Email }}" required>
             </div>
-
+        
             <div class="form-group">
                 <label for="Role">Rôle:</label>
                 <select id="role" name="Role" required>
-                    <option value="Président" {% if member.Role == 'President' %}selected{% endif %}>Président</option>
+                    <option value="Président" {% if member.Role == 'Président' %}selected{% endif %}>Président</option>
                     <option value="Vice-Président" {% if member.Role == 'Vice-Président' %}selected{% endif %}>Vice-Président</option>
                     <option value="Secrétaire Général" {% if member.Role == 'Secrétaire Général' %}selected{% endif %}>Secrétaire Général</option>
                     <option value="Trésorier" {% if member.Role == 'Trésorier' %}selected{% endif %}>Trésorier</option>
                     <option value="Membre" {% if member.Role == 'Membre' %}selected{% endif %}>Membre</option>
                 </select>
             </div>
-
+        
             <div class="form-group">
                 <label for="Club_id">Club ID:</label>
                 <select name="Club_id" id="Club_id">
@@ -44,13 +44,85 @@
                     <option value="2" {% if member.Club_id == 2 %}selected{% endif %}>FGE Ensias</option>
                     <option value="3" {% if member.Club_id == 3 %}selected{% endif %}>FGE Insea</option>
                 </select>
-            </div> 
+            </div>
 
+            <div class="form-group" id="celluleSelection" style="display:none;">
+                <label for="Cellule_id">Cellules:</label><br>
+                <label>
+                    <input type="checkbox" name="Cellule_id" value="1" {% if 1 in member_cellules %} checked {% endif %} class="cellule-checkbox"> Media
+                    <input type="checkbox" name="chief_1" value="1" {% if 1 in chief_status and chief_status[1] %} checked {% endif %} class="chief-checkbox"  style="display:none;"> <label for="chief_1" style="display:none;">Chief</span>
+                </label><br>
+                <label>
+                    <input type="checkbox" name="Cellule_id" value="2" {% if 2 in member_cellules %} checked {% endif %} class="cellule-checkbox"> Technique
+                    <input type="checkbox" name="chief_2" value="2" {% if 2 in chief_status and chief_status[2] %} checked {% endif %} class="chief-checkbox" style="display:none;"> <label for="chief_2" style="display:none;">Chief</span>
+                </label><br>
+                <label>
+                    <input type="checkbox" name="Cellule_id" value="3" {% if 3 in member_cellules %} checked {% endif %} class="cellule-checkbox"> Logistique
+                    <input type="checkbox" name="chief_3" value="3" {% if 3 in chief_status and chief_status[3] %} checked {% endif %} class="chief-checkbox" style="display:none;"> <label for="chief_3" style="display:none;">Chief</span>
+                </label><br>
+                <label>
+                    <input type="checkbox" name="Cellule_id" value="4" {% if 4 in member_cellules %} checked {% endif %} class="cellule-checkbox"> Prospection
+                    <input type="checkbox" name="chief_4" value="4" {% if 4 in chief_status and chief_status[4] %} checked {% endif %} class="chief-checkbox" style="display:none;"> <label for="chief_4" style="display:none;">Chief</span>
+                </label><br>
+                <label>
+                    <input type="checkbox" name="Cellule_id" value="5" {% if 5 in member_cellules %} checked {% endif %} class="cellule-checkbox"> Rédaction
+                    <input type="checkbox" name="chief_5" value="5" {% if 5 in chief_status and chief_status[5] %} checked {% endif %} class="chief-checkbox" style="display:none;"><label for="chief_5" style="display:none;">Chief</span>
+                </label><br>
+                <label>
+                    <input type="checkbox" name="Cellule_id" value="6" {% if 6 in member_cellules %} checked {% endif %} class="cellule-checkbox"> Sponsoring
+                    <input type="checkbox" name="chief_6" value="6" {% if 6 in chief_status and chief_status[6] %} checked {% endif %} class="chief-checkbox" style="display:none;"> <label for="chief_6" style="display:none;">Chief</span>
+                </label><br>
+            </div>
             <button type="submit">Edit Member</button>
         </form>
+        
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.all.min.js"></script>
+    <script>
+        // JavaScript to manage dynamic behavior of the form
+        document.getElementById('role').addEventListener('change', function() {
+            const role = this.value;
+            const celluleSelection = document.getElementById('celluleSelection');
+            
+            // Show or hide cellule selection based on role
+            if (role === 'Membre') {
+                celluleSelection.style.display = 'block';
+            } else {
+                celluleSelection.style.display = 'none';
+            }
+        });
+        
+        // Show/hide Chief checkbox based on Cellule selection
+        const celluleCheckboxes = document.querySelectorAll('.cellule-checkbox');
+        celluleCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const chiefCheckbox = document.querySelector(`input[name="chief_${this.value}"]`);
+                const chiefspan = document.querySelector(`label[for="chief_${this.value}"]`);
     
+                if (this.checked) {
+                    chiefCheckbox.style.display = 'inline'; // Show chief checkbox
+                    chiefspan.style.display = 'inline'; // Show chief span
+                } else {
+                    chiefCheckbox.style.display = 'none'; // Hide chief checkbox
+                    chiefspan.style.display = 'none'; // Hide chief span
+                    chiefCheckbox.checked = false; // Uncheck chief if cellule is unchecked
+                }
+            });
+        });
+        
+        // Ensure only one chief can be selected
+        const chiefCheckboxes = document.querySelectorAll('.chief-checkbox');
+        chiefCheckboxes.forEach(chiefCheckbox => {
+            chiefCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    // Uncheck all other chief checkboxes
+                    chiefCheckboxes.forEach(cb => {
+                        if (cb !== this) cb.checked = false;
+                    });
+                }
+            });
+        });
+        </script>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <script>

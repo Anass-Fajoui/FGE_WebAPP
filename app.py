@@ -114,21 +114,24 @@ def add_member():
 # Route to delete a member
 @app.route('/members/edit_member/<int:id>', methods=['GET', 'POST'])
 def edit_member(id):
-    member = Membre.query.get(id)
+    member = Membre.query.get_or_404(id)
     
     if request.method == 'POST':
+        # Fetch basic fields
         Nom = request.form['Nom']
         Prenom = request.form['Prenom']
         Email = request.form['Email']
         Role = request.form['Role']
         Club_id = request.form['Club_id']
-        
+
+        # Update member details
         member.Nom = Nom
         member.Prenom = Prenom
         member.Email = Email
         member.Role = Role
         member.Club_id = Club_id
 
+        # Input validation
         if len(Nom) > 50:
             flash("The name cannot be longer than 50 characters.", 'error')
             return redirect('/members/edit_member/' + str(id))
@@ -138,10 +141,24 @@ def edit_member(id):
             return redirect('/members/edit_member/' + str(id))
         
         if len(Email) > 100:
-            flash("The email cannot be longer than 50 characters.", 'error')
+            flash("The email cannot be longer than 100 characters.", 'error')
             return redirect('/members/edit_member/' + str(id))
-        
-        try : 
+
+        # Handle cellule assignments
+        selected_cellules = request.form.getlist('Cellule_id')  # Selected Cellule IDs
+        chief_cellules = {key for key in request.form if key.startswith("chief_")}  # Chief checkboxes
+
+        # Remove existing cellule assignments
+        s_inscrire.query.filter_by(Membre_id=id).delete()
+
+        # Add new cellule assignments
+        for cellule_id in selected_cellules:
+            est_chef = f"chief_{cellule_id}" in chief_cellules  # Check if member is marked as chief
+            new_inscription = s_inscrire(Membre_id=id, Cellule_id=cellule_id, EstChef=est_chef)
+            db.session.add(new_inscription)
+
+        try:
+            # Commit all changes
             db.session.commit()
             flash('Member updated successfully', 'success')
         except Exception as e:
@@ -149,10 +166,24 @@ def edit_member(id):
             flash(f'An error occurred: {str(e)}', 'error')  # Display error message
             return redirect('/members/edit_member/' + str(id))
         
-        
         return redirect('/members')  # Redirect to the members list
     
-    return render_template('edit_member.html', member=member)
+    # Pre-fill current cellule data for the form
+    current_cellules = s_inscrire.query.filter_by(Membre_id=id).all()
+    member_cellules = [inscription.Cellule_id for inscription in current_cellules]
+    chief_status = {inscription.Cellule_id: inscription.EstChef for inscription in current_cellules}
+
+    # Fetch all cellules for the form
+    # cellules = Cellule.query.all()
+
+    return render_template(
+        'edit_member.html',
+        member=member,
+        # cellules=cellules,
+        member_cellules=member_cellules,
+        chief_status=chief_status
+    )
+
 
 @app.route('/members/delete_member/<int:id>', methods=['GET', 'POST'])
 def delete_member(id):

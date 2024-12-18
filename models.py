@@ -24,3 +24,12 @@ class s_inscrire(db.Model):
 
     def __repr__(self):
         return f'<s_inscrire {self.Membre_id} {self.Cellule_id}>'
+    
+class Cellule(db.Model):
+    __tablename__ = 'Cellule'
+
+    Cellule_id = db.Column(db.Integer, primary_key=True)
+    Nom = db.Column(db.String(100))
+
+    def __repr__(self):
+        return f'<Cellule {self.Nom}>'
