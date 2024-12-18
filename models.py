@@ -14,3 +14,13 @@ class Membre(db.Model):
 
     def __repr__(self):
         return f'<Membre {self.Nom} {self.Prénom}>'
+
+class s_inscrire(db.Model):
+    __tablename__ = 's_inscrire'
+
+    Membre_id = db.Column(db.Integer, primary_key=True)
+    Cellule_id = db.Column(db.Integer, primary_key=True)
+    EstChef = db.Column(db.Boolean, nullable=False, default=False)
+
+    def __repr__(self):
+        return f'<s_inscrire {self.Membre_id} {self.Cellule_id}>'

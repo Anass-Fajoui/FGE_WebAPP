@@ -100,6 +100,25 @@ body {
     border-radius: 50%;
 
 }
+
+/* .tabs{
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.tabs a{
+    padding: 10px 20px;
+    border-radius: 20px;
+    margin-right: 10px;
+    text-decoration: none;
+    color: white;
+    background-color: #4CAF50;
+    transition-duration: 0.3s;
+} */
+ 
+
+
 .container {
     background-color: #fff;
     border: 1px solid #ddd;

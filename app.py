@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
-from models import db, Membre
+from models import db, Membre, s_inscrire
 
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -27,24 +27,26 @@ def test():
 # Route to list all members
 @app.route('/members')
 def list_members():
-    search_query = request.args.get('search', '')
-
-    # Query the database based on the search query
-    if search_query:
-        # Search by name (first name or last name) or email
-        members = Membre.query.filter(
-            (Membre.Nom.like(f'%{search_query}%')) |
-            (Membre.Prenom.like(f'%{search_query}%')) |
-            (Membre.Email.like(f'%{search_query}%'))
-        ).all()
-    else:
-        # If no search query, return all members
-        members = Membre.query.all()
+    # Extract filters from the query parameters
+    club_id = request.args.get('Club_id')
+    cellule_ids = request.args.getlist('Cellule_id')  # Get all selected cellule_ids
+    
+    # Build the query
+    query = Membre.query
+    
+    if club_id:  # Filter by club
+        query = query.filter(Membre.Club_id == club_id)
+    
+    if cellule_ids:  # Filter by cellules
+        query = query.join(s_inscrire, s_inscrire.Membre_id == Membre.Membre_id).filter(s_inscrire.Cellule_id.in_(cellule_ids))
+    
+    # Get filtered members
+    members = query.all()
     
     return render_template('members.html', members=members)
 
 # Route to add a new member
-@app.route('/members/add_member', methods=['GET', 'POST'])
+@app.route('/members/add_member', methods=['POST', 'GET'])
 def add_member():
     if request.method == 'POST':
         # Get data from the form
@@ -62,6 +64,7 @@ def add_member():
             flash('A member with this ID already exists.', 'error')
             return redirect('/members/add_member')  # Redirect back to the form to correct the input
         
+        # Validate input lengths
         if len(nom) > 50:
             flash("The name cannot be longer than 50 characters.", 'error')
             return redirect('/members/add_member')
@@ -73,23 +76,39 @@ def add_member():
         if len(email) > 50:
             flash("The email cannot be longer than 50 characters.", 'error')
             return redirect('/members/add_member')
-        try:
-            # Add new member to the database
-            new_member = Membre(Membre_id=id, Nom=nom, Prenom=prenom, Email=email, Role=role, Club_id=club_id)
-            db.session.add(new_member)
-            db.session.commit()
-            
-            flash("Member added succesfully", 'success')
-              # Redirect to the members list
         
+        # Create a new member object
+        new_member = Membre(Membre_id=id, Nom=nom, Prenom=prenom, Email=email, Role=role, Club_id=club_id)
+        db.session.add(new_member)
+        
+        # Managing memberships
+        # Get the selected cellules
+        selected_cellules = request.form.getlist('Cellule_id')
+        print(selected_cellules)
+    
+        # Process chief selection
+        chief_cellules = {key: value for key, value in request.form.items() if key.startswith("chief_")}
+
+        # Add the member to the selected cellules in the s_inscrire table
+        for cellule_id in selected_cellules:
+            est_chef = True if f"chief_{cellule_id}" in chief_cellules else False
+            # Create an entry in the s_inscrire table (which tracks memberships)
+            inscription = s_inscrire(Membre_id=new_member.Membre_id, Cellule_id=int(cellule_id), EstChef=est_chef)
+            db.session.add(inscription)
+    
+        try:
+            db.session.commit()
+            flash('Member added successfully', 'success')
         except Exception as e:
-            db.session.rollback()  # Rollback in case of error
-            flash(f'An error occurred: {str(e)}', 'error')  # Display error message
+            print(str(e))
+            flash('An error occurred ', 'error')
+            db.session.rollback()
             return redirect('/members/add_member')
         
-        return redirect('/members')
+        return redirect('/members')  # Redirect to the members page after successful submission
     
-    return render_template('add_member.html')
+    return render_template('add_member.html')  # Render the form on GET request
+
 
 
 # Route to delete a member
@@ -137,8 +156,10 @@ def edit_member(id):
 
 @app.route('/members/delete_member/<int:id>', methods=['GET', 'POST'])
 def delete_member(id):
+    s_inscrire.query.filter_by(Membre_id=id).delete()
     member = Membre.query.get(id)
     db.session.delete(member)
+
     db.session.commit()
     flash('Member deleted successfully', 'success')
     return redirect('/members')
