@@ -7,6 +7,10 @@
     <title>Members List</title>
     <link rel="stylesheet" href="../static/members.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.min.css" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
 </head>
 <body>
@@ -24,9 +28,6 @@
             </li>
             <li>
                 <a href=""><i class="fas fa-calendar-alt"></i> Events</a>
-            </li>
-            <li>
-                <a href=""><i class="fas fa-chart-pie"></i> Analytics</a>
             </li>
             <li>
                 <a href=""><i class="fas fa-cog"></i> Logout</a>
@@ -49,49 +50,51 @@
             </form>
         </div>
         
-        <form method="get" action="/members">
-            <label for="clubFilter">Filter by Club:</label>
-            
-            <select name="Club_id" id="clubFilter">
-                <option value="">Tous</option>
-                <option value="1">FGE Inpt</option>
-                <option value="2">FGE Ensias</option>
-                <option value="3">FGE Insea</option>
-            </select>
-            
-            <!-- Filter by Cellules (Checkboxes) -->
-            <fieldset>
-                <legend>Filter by Cellules:</legend>
+        <div class="filter-section">
+            <form method="get" action="/members">
+                <div class="filter-group">
+                    <label for="clubFilter">Filter by Club:</label>
+                    <select name="Club_id" id="clubFilter">
+                        <option value="">Tous</option>
+                        <option value="1">FGE Inpt</option>
+                        <option value="2">FGE Ensias</option>
+                        <option value="3">FGE Insea</option>
+                    </select>
+                </div>
                 
+                <fieldset>
+                    <legend>Filter by Cellules:</legend>
                     <label>
                         <input type="checkbox" name="Cellule_id" value=""> Tous
-                    </label><br>
+                    </label>
                     <label>
                         <input type="checkbox" name="Cellule_id" value="1"> Media
-                    </label><br>
+                    </label>
                     <label>
                         <input type="checkbox" name="Cellule_id" value="2"> Technique
-                    </label><br>
+                    </label>
                     <label>
                         <input type="checkbox" name="Cellule_id" value="3"> Logistique
-                    </label><br>
+                    </label>
                     <label>
                         <input type="checkbox" name="Cellule_id" value="4"> Prospection
-                    </label><br>
+                    </label>
                     <label>
                         <input type="checkbox" name="Cellule_id" value="5"> Rédaction
-                    </label><br>
+                    </label>
                     <label>
                         <input type="checkbox" name="Cellule_id" value="6"> Sponsoring
-                    </label><br>
-            </fieldset>
-            
-            <button type="submit">Filter</button>
-        </form>
+                    </label>
+                </fieldset>
+                
+                <button type="submit" class="filter-button">Apply Filters</button>
+            </form>
+        </div>
+        
         <div class="container">
             <table>
                 <thead>
-                    <tr>
+                    <tr> 
                         <th class="idCol">ID</th>
                         <th class="nomCol">Nom</th>
                         <th class="prenomCol">Prénom</th>
@@ -105,7 +108,7 @@
                 <tbody>
                     {% for member in members %}
                     <tr>
-                        <td class="idCol">{{ member.Membre_id }}</td>
+                        <td class="idCol" style="text-align: center;">{{ member.Membre_id }}</td>
                         <td class="nomCol">{{ member.Nom }}</td>
                         <td class="prenomCol">{{ member.Prenom }}</td>
                         <td class="emailCol">{{ member.Email }}</td>

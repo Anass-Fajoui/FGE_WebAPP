@@ -3,15 +3,11 @@ from flask_sqlalchemy import SQLAlchemy
 from models import db, Membre, s_inscrire
 
 app = Flask(__name__)
+
 app.config['TEMPLATES_AUTO_RELOAD'] = True
-
-
 app.config['SECRET_KEY'] = 'AnassLpro165'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:anasslpro@localhost/fge'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-
-
 
 db.init_app(app)
 
@@ -21,46 +17,46 @@ def home():
     return render_template('home.html')
 
 
-
-
 @app.route('/members')
 def list_members():
-    
     club_id = request.args.get('Club_id')
     cellule_ids = request.args.getlist('Cellule_id')  
-    
-    
+
+    search_query = request.args.get('search', '').lower() 
+
     query = Membre.query
+
+    if search_query:
+        query = query.filter(
+            db.or_(
+                Membre.Nom.ilike(f'%{search_query}%'),
+                Membre.Prenom.ilike(f'%{search_query}%'),
+                Membre.Email.ilike(f'%{search_query}%')
+            )
+        )
     
-    if club_id:  # 
+    if club_id:
         query = query.filter(Membre.Club_id == club_id)
-    
-    if cellule_ids:  
-        query = query.join(s_inscrire, s_inscrire.Membre_id == Membre.Membre_id).filter(s_inscrire.Cellule_id.in_(cellule_ids))
-    
-    
+
+    if cellule_ids!= [] and cellule_ids != ['']:
+        query = query.join(s_inscrire, s_inscrire.Membre_id == Membre.Membre_id).filter(
+            s_inscrire.Cellule_id.in_(cellule_ids)
+        )
+
     members = query.all()
-    
+
     return render_template('members.html', members=members)
+
 
 
 @app.route('/members/add_member', methods=['POST', 'GET'])
 def add_member():
     if request.method == 'POST':
-        
-        # id = request.form['Membre_id']
         nom = request.form['Nom']
         prenom = request.form['Prenom']
         email = request.form['Email']
         role = request.form['Role']
         club_id = request.form['Club_id']
-        
-        
-        # existing_member = Membre.query.filter_by(Membre_id=id).first()
-
-        # if existing_member:
-        #     flash('A member with this ID already exists.', 'error')
-        #     return redirect('/members/add_member')  
         
         
         if len(nom) > 50:
@@ -71,7 +67,7 @@ def add_member():
             flash("The prénom cannot be longer than 50 characters.", 'error')
             return redirect('/members/add_member')
         
-        if len(email) > 50:
+        if len(email) > 100:
             flash("The email cannot be longer than 50 characters.", 'error')
             return redirect('/members/add_member')
         
@@ -81,7 +77,7 @@ def add_member():
         
         
         selected_cellules = request.form.getlist('Cellule_id')
-        print(selected_cellules)
+        # print(selected_cellules)
     
        
         chief_cellules = {key: value for key, value in request.form.items() if key.startswith("chief_")}
@@ -174,7 +170,6 @@ def edit_member(id):
     return render_template(
         'edit_member.html',
         member=member,
-        # cellules=cellules,
         member_cellules=member_cellules,
         chief_status=chief_status
     )
