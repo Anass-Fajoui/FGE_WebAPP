@@ -79,50 +79,76 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.all.min.js"></script>
     <script>
-        // JavaScript to manage dynamic behavior of the form
-        document.getElementById('role').addEventListener('change', function() {
-            const role = this.value;
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            const roleSelect = document.getElementById('role');
             const celluleSelection = document.getElementById('celluleSelection');
-            
-            // Show or hide cellule selection based on role
-            if (role === 'Membre') {
-                celluleSelection.style.display = 'block';
-            } else {
-                celluleSelection.style.display = 'none';
-            }
-        });
-        
-        // Show/hide Chief checkbox based on Cellule selection
-        const celluleCheckboxes = document.querySelectorAll('.cellule-checkbox');
-        celluleCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                const chiefCheckbox = document.querySelector(`input[name="chief_${this.value}"]`);
-                const chiefspan = document.querySelector(`label[for="chief_${this.value}"]`);
-    
-                if (this.checked) {
-                    chiefCheckbox.style.display = 'inline'; // Show chief checkbox
-                    chiefspan.style.display = 'inline'; // Show chief span
+            const celluleCheckboxes = document.querySelectorAll('.cellule-checkbox');
+            const chiefCheckboxes = document.querySelectorAll('.chief-checkbox');
+
+            // Function to toggle cellule selection visibility based on role
+            function updateCelluleVisibility() {
+                const role = roleSelect.value;
+                if (role === 'Membre') {
+                    celluleSelection.style.display = 'block';
                 } else {
-                    chiefCheckbox.style.display = 'none'; // Hide chief checkbox
-                    chiefspan.style.display = 'none'; // Hide chief span
-                    chiefCheckbox.checked = false; // Uncheck chief if cellule is unchecked
-                }
-            });
-        });
-        
-        // Ensure only one chief can be selected
-        const chiefCheckboxes = document.querySelectorAll('.chief-checkbox');
-        chiefCheckboxes.forEach(chiefCheckbox => {
-            chiefCheckbox.addEventListener('change', function() {
-                if (this.checked) {
-                    // Uncheck all other chief checkboxes
-                    chiefCheckboxes.forEach(cb => {
-                        if (cb !== this) cb.checked = false;
+                    celluleSelection.style.display = 'none';
+                    // Uncheck all cellule checkboxes and hide chief options
+                    celluleCheckboxes.forEach(cb => {
+                        cb.checked = false;
+                        toggleChiefVisibility(cb.value, false);
                     });
                 }
+            }
+
+            // Function to toggle chief checkbox visibility
+            function toggleChiefVisibility(celluleValue, show) {
+                const chiefCheckbox = document.querySelector(`input[name="chief_${celluleValue}"]`);
+                const chiefLabel = document.querySelector(`label[for="chief_${celluleValue}"]`);
+                if (chiefCheckbox && chiefLabel) {
+                    chiefCheckbox.style.display = show ? 'inline' : 'none';
+                    chiefLabel.style.display = show ? 'inline' : 'none';
+                    if (!show) chiefCheckbox.checked = false; // Uncheck chief if hidden
+                }
+            }
+
+            // Add change event listener to cellule checkboxes
+            celluleCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    toggleChiefVisibility(this.value, this.checked);
+                });
             });
+
+            // Ensure only one chief checkbox can be selected
+            chiefCheckboxes.forEach(chiefCheckbox => {
+                chiefCheckbox.addEventListener('change', function () {
+                    if (this.checked) {
+                        // Uncheck all other chief checkboxes
+                        chiefCheckboxes.forEach(cb => {
+                            if (cb !== this) cb.checked = false;
+                        });
+                    }
+                });
+            });
+
+            // Initialize chief visibility on page load based on checked cellules
+            function initializeChiefVisibility() {
+                celluleCheckboxes.forEach(checkbox => {
+                    toggleChiefVisibility(checkbox.value, checkbox.checked);
+                });
+            }
+
+            // Run the role-based visibility logic on page load
+            updateCelluleVisibility();
+
+            // Initialize the visibility of chief checkboxes on page load
+            initializeChiefVisibility();
+
+            // Add change event listener to the role dropdown
+            roleSelect.addEventListener('change', updateCelluleVisibility);
         });
-        </script>
+    </script>
+    
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <script>
