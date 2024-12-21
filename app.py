@@ -187,7 +187,7 @@ def delete_member(id):
 
 
 
-@app.route('/sponsors', methods=['GET'])
+
 # def entreprises():
 #     filter_year = request.args.get('year')
 #     filter_sponsor_type = request.args.get('sponsor_type')
@@ -364,6 +364,81 @@ def delete_sponsor(id):
     flash('Sponsor deleted successfully', 'success')
     return redirect('/sponsors')
 
+@app.route('/events', methods=['GET'])
+def events():
+    filter_club = request.args.get('filter_club')
+    print(filter_club)
+
+    search_query = request.args.get('search', '').strip()
+    query = evenement.query
+
+    if search_query:
+        query = query.filter(evenement.Year.ilike(f"%{search_query}%"))
+    if filter_club:
+        query = query.filter(evenement.Club_id == filter_club)
+    
+    events = query.all()
+    
+
+    return render_template('events.html', events=events, selected_club=filter_club)
+
+
+@app.route('/events/add_event', methods=['GET', 'POST'])
+def add_event():
+    if request.method == 'POST':
+        year = int(request.form.get('Year'))
+        club_id = int(request.form.get('Club_id'))
+        
+        existing_event = evenement.query.filter_by(Year=year).first()
+
+        if existing_event:
+            flash("Event already exists!", "error")
+            return redirect('/events/add_event')
+        
+        new_event = evenement(Year=year, Club_id=club_id)
+        try :
+            db.session.add(new_event)
+            db.session.commit()
+            flash("Event added successfully!", "success")
+            return redirect('/events')
+        except Exception as e:
+            db.session.rollback()
+            flash(f"An error occurred:", "error")
+            return redirect('/events/add_event')
+        
+    return render_template('add_event.html')
+
+@app.route('/events/edit_event/<int:id>', methods=['GET', 'POST'])
+def edit_event(id):
+    event = evenement.query.get_or_404(id)
+    
+    if request.method == 'POST':
+        year = int(request.form.get('Year'))
+        club_id = int(request.form.get('Club_id'))
+        
+        event.Year = year
+        event.Club_id = club_id
+        
+        try :
+            db.session.commit()
+            flash("Event updated successfully!", "success")
+            return redirect('/events')
+        except Exception as e:
+            db.session.rollback()
+            flash(f"An error occurred:", "error")
+            return redirect(f'/events/edit_event/{id}')
+    
+    return render_template('edit_event.html', event=event)
+
+@app.route('/events/delete_event/<int:id>', methods=['GET', 'POST'])
+def delete_event(id):
+    event = evenement.query.get(id)
+    db.session.delete(event)
+    db.session.commit()
+    flash('Event deleted successfully', 'success')
+    return redirect('/events')
+
 if __name__ == "__main__":
     
     app.run(debug=True)
+ 

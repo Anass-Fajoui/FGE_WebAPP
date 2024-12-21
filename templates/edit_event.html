@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/add_member.css">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.min.css" rel="stylesheet">
+    <title>Edit Event</title>
+</head> 
+<body>
+    <h1>Edit Event</h1>
+    <div class="container">
+        <form method="POST">
+            <div class="form-group">
+                <label for="Year">Year: </label>
+                <input type="number" name="Year" value="{{ event.Year }}" required>
+            </div>
+        
+            <div class="form-group">
+                <label for="Club_id">Club organisateur: </label>
+                <select name="Club_id" id="Club_id" required>
+                    <option value="1" {% if event.Club_id == 1 %}selected{% endif %}>FGE Inpt</option>
+                    <option value="2" {% if event.Club_id == 2 %}selected{% endif %}>FGE Ensias</option>
+                    <option value="3" {% if event.Club_id == 3 %}selected{% endif %}>FGE Insea</option>
+                </select>
+            </div>
+
+            <button type="submit">Edit Member</button>
+        </form>
+        
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.all.min.js"></script>
+   
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <script>
+               Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "{{ messages[0]}}"
+                    });
+            </script>
+        {% endif %}
+    {% endwith %}
+</body>
+</html>
