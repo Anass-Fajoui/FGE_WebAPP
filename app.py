@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
-from models import db, Membre, s_inscrire
+from models import db, Membre, s_inscrire, entreprise, sponsoriser, evenement
 
 app = Flask(__name__)
 
@@ -186,5 +186,154 @@ def delete_member(id):
     return redirect('/members')
 
 
+
+@app.route('/sponsors', methods=['GET'])
+def entreprises():
+    filter_year = request.args.get('year')
+    filter_sponsor_type = request.args.get('sponsor_type')
+    search_query = request.args.get('search', '').strip()
+    
+    query = db.session.query(
+        sponsoriser.Year,
+        sponsoriser.Sponsor_type,
+        entreprise.Entreprise_id,
+        entreprise.Ent_Nom
+    ).join(entreprise, sponsoriser.Entreprise_id == entreprise.Entreprise_id)
+    
+    if search_query:
+        query = query.filter(entreprise.Ent_Nom.ilike(f"%{search_query}%"))
+
+    if filter_year:
+        query = query.filter(sponsoriser.Year == int(filter_year))
+    if filter_sponsor_type:
+        query = query.filter(sponsoriser.Sponsor_type == filter_sponsor_type)
+    
+    entreprises = query.all()
+    
+    # Fetch distinct years from the evenement table
+    years = [row[0] for row in db.session.query(evenement.Year).distinct()]
+    sponsor_types = ['Gold', 'Platinum', 'Silver']
+    
+    return render_template(
+        'sponsors.html', 
+        entreprises=entreprises, 
+        years=years, 
+        sponsor_types=sponsor_types, 
+        selected_year=filter_year, 
+        selected_sponsor_type=filter_sponsor_type
+    )
+
+@app.route('/sponsors/add_sponsor', methods=['GET', 'POST'])
+def add_sponsor():
+    if request.method == 'POST':
+        
+        sponsor_name = request.form.get('sponsor_name')
+        
+        selected_years = request.form.getlist('year')
+        print(selected_years)
+    
+        # Check if the sponsor already exists
+        existing_sponsor = entreprise.query.filter_by(Ent_Nom=sponsor_name).first()
+        if not existing_sponsor:
+            
+            new_entreprise = entreprise(Ent_Nom=sponsor_name)
+            db.session.add(new_entreprise)
+            db.session.flush()  # Flush to get the new entreprise ID
+            entreprise_id = new_entreprise.Entreprise_id
+        else:
+            entreprise_id = existing_sponsor.Entreprise_id
+
+        # Add entries to the sponsoriser table
+        for year in selected_years:
+            new_sponsorship = sponsoriser(
+                Year=int(year),
+                Entreprise_id=entreprise_id,
+                Sponsor_type=request.form.get(f'sponsor_type_{year}')
+            )
+            db.session.add(new_sponsorship)
+
+        # Commit changes to the database
+        db.session.commit()
+        flash("Sponsor successfully added!", "success")
+        return redirect('/sponsors')
+
+    # Fetch all years from the evenement table
+    years = [row[0] for row in db.session.query(evenement.Year).distinct()]
+
+    return render_template('add_sponsor.html', years=years)
+
+@app.route('/sponsors/edit_sponsor/<int:id>', methods=['GET', 'POST'])
+def edit_sponsor(id):
+    
+    sponsor = entreprise.query.get_or_404(id)
+    
+    if request.method == 'POST':
+        sponsor_name = request.form.get('sponsor_name')
+        selected_years = request.form.getlist('year')
+        
+        # Update sponsor name if changed
+        sponsor.Ent_Nom = sponsor_name
+        
+        # Get current sponsorships for this sponsor
+        current_sponsorships = sponsoriser.query.filter_by(Entreprise_id=id).all()
+        current_years = {s.Year for s in current_sponsorships}
+        
+        # Remove sponsorships for years that are no longer selected
+        for sponsorship in current_sponsorships:
+            if str(sponsorship.Year) not in selected_years:
+                db.session.delete(sponsorship)
+        
+        # Add or update sponsorships for selected years
+        for year in selected_years:
+            year_int = int(year)
+            sponsorship = sponsoriser.query.filter_by(
+                Entreprise_id=id,
+                Year=year_int
+            ).first()
+            
+            if sponsorship:
+                # Update existing sponsorship type
+                sponsorship.Sponsor_type = request.form.get(f'sponsor_type_{year}')
+            else:
+                # Create new sponsorship
+                new_sponsorship = sponsoriser(
+                    Year=year_int,
+                    Entreprise_id=id,
+                    Sponsor_type=request.form.get(f'sponsor_type_{year}')
+                )
+                db.session.add(new_sponsorship)
+        
+        try:
+            db.session.commit()
+            flash("Sponsor successfully updated!", "success")
+            return redirect('/sponsors')
+        except Exception as e:
+            db.session.rollback()
+            flash("An error occurred while updating the sponsor.", "error")
+            print(e)  # For debugging
+            return redirect(f'/sponsors/edit_sponsor/{id}')
+    
+    # Get current sponsorships for pre-filling the form
+    current_sponsorships = sponsoriser.query.filter_by(Entreprise_id=id).all()
+    sponsor_years = [str(s.Year) for s in current_sponsorships]
+    sponsor_types = {str(s.Year): s.Sponsor_type for s in current_sponsorships}
+    
+    # Fetch all years from the evenement table
+    years = [str(row[0]) for row in db.session.query(evenement.Year).distinct()]
+    
+    return render_template('edit_sponsor.html', sponsor=sponsor, sponsor_years=sponsor_years, sponsor_types=sponsor_types,years=years)
+
+
+
+@app.route('/sponsors/delete_sponsor/<int:id>', methods=['GET', 'POST'])
+def delete_sponsor(id):
+    sponsor = entreprise.query.get(id)
+    sponsoriser.query.filter_by(Entreprise_id=id).delete()
+    db.session.delete(sponsor)
+    db.session.commit()
+    flash('Sponsor deleted successfully', 'success')
+    return redirect('/sponsors')
+
 if __name__ == "__main__":
+    
     app.run(debug=True)

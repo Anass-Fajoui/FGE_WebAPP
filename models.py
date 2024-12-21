@@ -33,3 +33,28 @@ class Cellule(db.Model):
 
     def __repr__(self):
         return f'<Cellule {self.Nom}>'
+    
+class entreprise(db.Model):
+    __tablename__ = 'entreprise'
+
+    Entreprise_id = db.Column(db.Integer, primary_key=True)
+    Ent_Nom = db.Column(db.String(100), nullable=False)
+
+    def __repr__(self):
+        return f'<entreprise {self.Nom}>'
+    
+class sponsoriser(db.Model):
+    __tablename__ = 'sponsoriser'
+
+    Year = db.Column(db.Integer, primary_key=True)
+    Entreprise_id = db.Column(db.Integer, primary_key=True)
+    Sponsor_type = db.Column(db.String(50), nullable=False)
+
+    def __repr__(self):
+        return f'<sponsoriser {self.Year} {self.Entreprise_id}>'
+    
+
+class evenement(db.Model):
+    __tablename__ = 'evenement'
+    Year = db.Column(db.Integer, primary_key=True)
+    Club_id = db.Column(db.Integer, nullable=False)

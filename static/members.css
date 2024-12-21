@@ -219,14 +219,14 @@ th:nth-child(4), td:nth-child(4) { width: 160px; }
 th:nth-child(5), td:nth-child(5) { width: 89px; }
 th:nth-child(6), td:nth-child(6) { width: 65px; }
 th:nth-child(7), td:nth-child(7) { width: 70px;}  */
-.nomCol{
+/* .nomCol{
     max-width: 150px;
 
 }
 .prenomCol{
     max-width: 150px;
     
-}
+} */
 
 
 .btns{
@@ -284,6 +284,3 @@ a {
     text-decoration: none;
     color: #333;
 }
-/* *{
-    font-family: "Raleway", sans-serif;
-} */

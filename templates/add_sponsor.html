@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Sponsor</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.4/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='add_sponsor.css') }}">
+</head>
+<body>
+    <h1>Add New Sponsor</h1>
+    
+    <div class="container">
+        <div class="form-card">
+            <form method="POST" id="sponsorForm" >
+                <div class="form-group">
+                    <label class="form-label" for="Sponsor_name">Sponsor Name</label>
+                    <input class="form-input" type="text" id="Sponsor_name" name="sponsor_name" required>
+                </div>
+            
+                <div class="form-group">
+                    <label class="form-label">Sponsorship Years</label>
+                    <div class="years-container">
+                        {% for year in years %}
+                            <div class="year-group">
+                                <div class="year-checkbox">
+                                    <input type="checkbox" id="year_{{ year }}" name="year" value="{{ year }}" class="year-checkbox-input">
+                                    <label for="year_{{ year }}">{{ year }}</label>
+                                </div>
+                                <select name="sponsor_type_{{ year }}" class="sponsor-type-select" disabled data-year="{{ year }}">
+                                    <option value="">Select Sponsorship Type</option>
+                                    <option value="Platinum">Platinum</option>
+                                    <option value="Gold">Gold</option>
+                                    <option value="Silver">Silver</option>
+                                </select>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="error-message" id="yearError">Please select at least one year and its sponsorship type</div>
+                </div>
+            
+                <button type="submit" class="submit-button">Add Sponsor</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.4/sweetalert2.all.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('sponsorForm');
+            const yearCheckboxes = document.querySelectorAll('.year-checkbox-input');
+            const sponsorTypeSelects = document.querySelectorAll('.sponsor-type-select');
+            const yearError = document.getElementById('yearError');
+
+            // Handle checkbox changes
+            yearCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const year = this.value;
+                    const correspondingSelect = document.querySelector(`select[data-year="${year}"]`);
+                    
+                    // Enable/disable corresponding select
+                    correspondingSelect.disabled = !this.checked;
+                    
+                    // Reset select value when unchecking
+                    if (!this.checked) {
+                        correspondingSelect.value = '';
+                    }
+                });
+            });
+
+            // Form submission validation
+            form.addEventListener('submit', function(e) {
+                let isValid = false;
+                let hasSelectedYear = false;
+                let allSelectedYearsHaveTypes = true;
+
+                // Check if at least one year is selected and all selected years have types
+                yearCheckboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        hasSelectedYear = true;
+                        const year = checkbox.value;
+                        const correspondingSelect = document.querySelector(`select[data-year="${year}"]`);
+                        if (!correspondingSelect.value) {
+                            allSelectedYearsHaveTypes = false;
+                        }
+                    }
+                });
+
+                isValid = hasSelectedYear && allSelectedYearsHaveTypes;
+
+                if (!isValid) {
+                    e.preventDefault();
+                    yearError.style.display = 'block';
+                    
+                    // Show error with SweetAlert2
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Validation Error',
+                        text: hasSelectedYear ? 
+                            'Please select a sponsorship type for all selected years.' : 
+                            'Please select at least one year and its sponsorship type.',
+                        confirmButtonColor: '#4CAF50'
+                    });
+                } else {
+                    yearError.style.display = 'none';
+                }
+            });
+        });
+    </script>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "{{ messages[0] }}",
+                    confirmButtonColor: "#2563eb"
+                });
+            </script>
+        {% endif %}
+    {% endwith %}
+</body>
+</html>
