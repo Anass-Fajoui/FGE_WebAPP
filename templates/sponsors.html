@@ -80,10 +80,10 @@
             <table>
                 <thead>
                     <tr> 
-                        <th class="idCol">ID</th>
+                        <th class="idCol" style="text-align: center; width: 60px;">ID</th>
                         <th class="entCol">Sponsor Nom</th>
-                        <th class="typeCol">Sponsorship Type</th>
-                        <th class="yearCol">Year</th>
+                        <!-- <th class="typeCol">Sponsorship Type</th> -->
+                        <!-- <th class="yearCol">Year</th> -->
                         <th class="btns"></th>
                     </tr>
                 </thead>
@@ -92,8 +92,8 @@
                     <tr>
                         <td class="idCol" style="text-align: center;">{{ entreprise.Entreprise_id }}</td>
                         <td class="entCol">{{ entreprise.Ent_Nom }}</td>
-                        <td class="typeCol">{{ entreprise.Sponsor_type }}</td>
-                        <td class="yearCol">{{ entreprise.Year }}</td>
+                        <!-- <td class="typeCol">{{ entreprise.Sponsor_type }}</td> -->
+                        <!-- <td class="yearCol">{{ entreprise.Year }}</td> -->
                         <td class="btns">
                             <a href="/sponsors/edit_sponsor/{{ entreprise.Entreprise_id }}">
                                 <button class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>

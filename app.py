@@ -240,6 +240,7 @@ def entreprises():
         
         sponsors = sponsors.filter(sponsoriser.Sponsor_type == filter_sponsor_type)
 
+    sponsors = sponsors.order_by(entreprise.Entreprise_id)
     entreprises = sponsors.all()
     years = [row[0] for row in db.session.query(evenement.Year).distinct()]
     
