@@ -64,9 +64,11 @@
                     <label for="typeFilter">Filter by Sponsor Type:</label>
                     <select name="sponsor_type" id="typeFilter">
                         <option value="">Select Sponsor Type</option>
-                        {% for sponsor_type in sponsor_types %}
-                        <option value="{{ sponsor_type }}" {% if selected_sponsor_type == sponsor_type %}selected{% endif %}>{{ sponsor_type }}</option>
-                        {% endfor %}
+                        
+                        <option value="gold" {% if selected_sponsor_type == 'gold' %}selected{% endif %}>Gold</option>
+                        <option value="platinium" {% if selected_sponsor_type == 'platinium' %}selected{% endif %}>Platinum</option>
+                        <option value="silver" {% if selected_sponsor_type == 'silver' %}selected{% endif %}>Silver</option>
+                        
                     </select>
                 </div>
                 

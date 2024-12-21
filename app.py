@@ -188,37 +188,66 @@ def delete_member(id):
 
 
 @app.route('/sponsors', methods=['GET'])
+# def entreprises():
+#     filter_year = request.args.get('year')
+#     filter_sponsor_type = request.args.get('sponsor_type')
+#     search_query = request.args.get('search', '').strip()
+    
+#     query = db.session.query(
+#         sponsoriser.Year,
+#         sponsoriser.Sponsor_type,
+#         entreprise.Entreprise_id,
+#         entreprise.Ent_Nom
+#     ).join(entreprise, sponsoriser.Entreprise_id == entreprise.Entreprise_id)
+    
+#     if search_query:
+#         query = query.filter(entreprise.Ent_Nom.ilike(f"%{search_query}%"))
+
+#     if filter_year:
+#         query = query.filter(sponsoriser.Year == int(filter_year))
+#     if filter_sponsor_type:
+#         query = query.filter(sponsoriser.Sponsor_type == filter_sponsor_type)
+    
+#     entreprises = query.all()
+    
+#     # Fetch distinct years from the evenement table
+#     years = [row[0] for row in db.session.query(evenement.Year).distinct()]
+#     sponsor_types = ['Gold', 'Platinum', 'Silver']
+    
+#     return render_template(
+#         'sponsors.html', 
+#         entreprises=entreprises, 
+#         years=years, 
+#         sponsor_types=sponsor_types, 
+#         selected_year=filter_year, 
+#         selected_sponsor_type=filter_sponsor_type
+#     )
+@app.route('/sponsors', methods=['GET'])
 def entreprises():
     filter_year = request.args.get('year')
     filter_sponsor_type = request.args.get('sponsor_type')
     search_query = request.args.get('search', '').strip()
-    
-    query = db.session.query(
-        sponsoriser.Year,
-        sponsoriser.Sponsor_type,
-        entreprise.Entreprise_id,
-        entreprise.Ent_Nom
-    ).join(entreprise, sponsoriser.Entreprise_id == entreprise.Entreprise_id)
-    
-    if search_query:
-        query = query.filter(entreprise.Ent_Nom.ilike(f"%{search_query}%"))
+    sponsors = entreprise.query
 
+    if search_query:
+        sponsors = sponsors.filter(entreprise.Ent_Nom.ilike(f"%{search_query}%"))
+    
+    sponsors = sponsors.join(sponsoriser, sponsoriser.Entreprise_id == entreprise.Entreprise_id)
     if filter_year:
-        query = query.filter(sponsoriser.Year == int(filter_year))
+        
+        sponsors = sponsors.filter(sponsoriser.Year == int(filter_year))
     if filter_sponsor_type:
-        query = query.filter(sponsoriser.Sponsor_type == filter_sponsor_type)
-    
-    entreprises = query.all()
-    
-    # Fetch distinct years from the evenement table
+        
+        sponsors = sponsors.filter(sponsoriser.Sponsor_type == filter_sponsor_type)
+
+    entreprises = sponsors.all()
     years = [row[0] for row in db.session.query(evenement.Year).distinct()]
-    sponsor_types = ['Gold', 'Platinum', 'Silver']
     
+
     return render_template(
         'sponsors.html', 
         entreprises=entreprises, 
         years=years, 
-        sponsor_types=sponsor_types, 
         selected_year=filter_year, 
         selected_sponsor_type=filter_sponsor_type
     )

@@ -34,9 +34,9 @@
                                         data-year="{{ year }}"
                                         {% if year not in sponsor_years %} disabled {% endif %}>
                                     <option value="">Select Sponsorship Type</option>
-                                    <option value="Platinum" {% if sponsor_types.get(year) == 'Platinum' %} selected {% endif %}>Platinum</option>
-                                    <option value="Gold" {% if sponsor_types.get(year) == 'Gold' %} selected {% endif %}>Gold</option>
-                                    <option value="Silver" {% if sponsor_types.get(year) == 'Silver' %} selected {% endif %}>Silver</option>
+                                    <option value="platinium" {% if sponsor_types.get(year) == 'Platinum' %} selected {% endif %}>Platinum</option>
+                                    <option value="gold" {% if sponsor_types.get(year) == 'Gold' %} selected {% endif %}>Gold</option>
+                                    <option value="silver" {% if sponsor_types.get(year) == 'Silver' %} selected {% endif %}>Silver</option>
                                 </select>
                             </div>
                         {% endfor %}
