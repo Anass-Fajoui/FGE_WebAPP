@@ -1,6 +1,9 @@
-from flask import Flask, render_template, request, redirect, flash
+# from flask import Flask, render_template, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, request, redirect, url_for, render_template, session, flash
+from werkzeug.security import check_password_hash, generate_password_hash
 from models import db, Membre, s_inscrire, entreprise, sponsoriser, evenement, participant, employe_rh, postuler
+from functools import wraps
 
 app = Flask(__name__)
 
@@ -11,13 +14,45 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
+USERNAME = "admin"
+PASSWORD_HASH = generate_password_hash("yourpassword")
 
 @app.route('/')
 def home():
     return render_template('home.html')
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        if username == USERNAME and check_password_hash(PASSWORD_HASH, password):
+            session['user'] = username  
+            return redirect("/dashboard")  
+
+        flash('Invalid credentials', 'error')
+
+    return render_template('login.html')  
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user' not in session:
+            return redirect("/login")
+        return f(*args, **kwargs)
+    
+    return decorated_function
+
+
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    return render_template('dashboard.html')
+
 
 @app.route('/members')
+@login_required
 def list_members():
     club_id = request.args.get('Club_id')
     cellule_ids = request.args.getlist('Cellule_id')  
@@ -50,6 +85,7 @@ def list_members():
 
 
 @app.route('/members/add_member', methods=['POST', 'GET'])
+@login_required
 def add_member():
     if request.method == 'POST':
         nom = request.form['Nom']
@@ -105,6 +141,7 @@ def add_member():
 
 
 @app.route('/members/edit_member/<int:id>', methods=['GET', 'POST'])
+@login_required
 def edit_member(id):
     member = Membre.query.get_or_404(id)
     
@@ -176,6 +213,7 @@ def edit_member(id):
 
 
 @app.route('/members/delete_member/<int:id>', methods=['GET', 'POST'])
+@login_required
 def delete_member(id):
     s_inscrire.query.filter_by(Membre_id=id).delete()
     member = Membre.query.get(id)
@@ -186,43 +224,8 @@ def delete_member(id):
     return redirect('/members')
 
 
-
-
-# def entreprises():
-#     filter_year = request.args.get('year')
-#     filter_sponsor_type = request.args.get('sponsor_type')
-#     search_query = request.args.get('search', '').strip()
-    
-#     query = db.session.query(
-#         sponsoriser.Year,
-#         sponsoriser.Sponsor_type,
-#         entreprise.Entreprise_id,
-#         entreprise.Ent_Nom
-#     ).join(entreprise, sponsoriser.Entreprise_id == entreprise.Entreprise_id)
-    
-#     if search_query:
-#         query = query.filter(entreprise.Ent_Nom.ilike(f"%{search_query}%"))
-
-#     if filter_year:
-#         query = query.filter(sponsoriser.Year == int(filter_year))
-#     if filter_sponsor_type:
-#         query = query.filter(sponsoriser.Sponsor_type == filter_sponsor_type)
-    
-#     entreprises = query.all()
-    
-#     # Fetch distinct years from the evenement table
-#     years = [row[0] for row in db.session.query(evenement.Year).distinct()]
-#     sponsor_types = ['Gold', 'Platinum', 'Silver']
-    
-#     return render_template(
-#         'sponsors.html', 
-#         entreprises=entreprises, 
-#         years=years, 
-#         sponsor_types=sponsor_types, 
-#         selected_year=filter_year, 
-#         selected_sponsor_type=filter_sponsor_type
-#     )
 @app.route('/sponsors', methods=['GET'])
+@login_required
 def entreprises():
     filter_year = request.args.get('year')
     filter_sponsor_type = request.args.get('sponsor_type')
@@ -254,6 +257,7 @@ def entreprises():
     )
 
 @app.route('/sponsors/add_sponsor', methods=['GET', 'POST'])
+@login_required
 def add_sponsor():
     if request.method == 'POST':
         
@@ -293,6 +297,7 @@ def add_sponsor():
     return render_template('add_sponsor.html', years=years)
 
 @app.route('/sponsors/edit_sponsor/<int:id>', methods=['GET', 'POST'])
+@login_required
 def edit_sponsor(id):
     
     sponsor = entreprise.query.get_or_404(id)
@@ -356,6 +361,7 @@ def edit_sponsor(id):
 
 
 @app.route('/sponsors/delete_sponsor/<int:id>', methods=['GET', 'POST'])
+@login_required
 def delete_sponsor(id):
     sponsor = entreprise.query.get(id)
     sponsoriser.query.filter_by(Entreprise_id=id).delete()
@@ -364,7 +370,9 @@ def delete_sponsor(id):
     flash('Sponsor deleted successfully', 'success')
     return redirect('/sponsors')
 
+
 @app.route('/events', methods=['GET'])
+@login_required
 def events():
     filter_club = request.args.get('filter_club')
     print(filter_club)
@@ -384,6 +392,7 @@ def events():
 
 
 @app.route('/events/add_event', methods=['GET', 'POST'])
+@login_required
 def add_event():
     if request.method == 'POST':
         year = int(request.form.get('Year'))
@@ -409,6 +418,7 @@ def add_event():
     return render_template('add_event.html')
 
 @app.route('/events/edit_event/<int:id>', methods=['GET', 'POST'])
+@login_required
 def edit_event(id):
     event = evenement.query.get_or_404(id)
     
@@ -431,6 +441,7 @@ def edit_event(id):
     return render_template('edit_event.html', event=event)
 
 @app.route('/events/delete_event/<int:id>', methods=['GET', 'POST'])
+@login_required
 def delete_event(id):
     event = evenement.query.get(id)
     db.session.delete(event)
@@ -440,6 +451,7 @@ def delete_event(id):
 
 
 @app.route('/employe_rh')
+@login_required
 def manage_employe_rh():
     entreprise_id = request.args.get('entreprise_id')
     search = request.args.get('search')
@@ -455,7 +467,9 @@ def manage_employe_rh():
     employes = query.all()
     return render_template('employe_rh.html', employes=employes, entreprises=entreprises, selected_entreprise_id=entreprise_id, search=search)
 
+
 @app.route('/employe_rh/add_employe_rh', methods=['GET', 'POST'])
+@login_required
 def add_employe_rh():
     if request.method == 'POST':
         nom = request.form['nom']
@@ -479,6 +493,7 @@ def add_employe_rh():
     return render_template('add_employe_rh.html', entreprises=entreprises)
 
 @app.route('/employe_rh/edit_employe_rh/<int:id>', methods=['GET', 'POST'])
+@login_required
 def edit_employe_rh(id):
     employe = employe_rh.query.get_or_404(id)
     entreprises = entreprise.query.all()
@@ -501,6 +516,7 @@ def edit_employe_rh(id):
     return render_template('edit_employe_rh.html', employe=employe, entreprises=entreprises)
 
 @app.route('/employe_rh/delete_employe_rh/<int:id>')
+@login_required
 def delete_employe_rh(id):
     employe = employe_rh.query.get_or_404(id)
     try:
@@ -516,6 +532,7 @@ def delete_employe_rh(id):
    
 
 @app.route('/participants')
+@login_required
 def list_participants():
     year = request.args.get('year')
     search_query = request.args.get('search', '')
@@ -540,6 +557,7 @@ def list_participants():
     return render_template('participants.html', participants=participants, evenements=evenements,year=year, search=search_query)
 
 @app.route('/participants/add_participant', methods=['GET', 'POST'])
+@login_required
 def add_participant():
     if request.method == 'POST':
         nom = request.form['nom']
@@ -562,6 +580,7 @@ def add_participant():
     return render_template('add_participant.html')
 
 @app.route('/participants/edit_participant/<int:id>', methods=['GET', 'POST'])
+@login_required
 def edit_participant(id):
     participant_ = participant.query.get_or_404(id)
 
@@ -584,6 +603,7 @@ def edit_participant(id):
     return render_template('edit_participant.html', participant=participant_)
 
 @app.route('/participants/delete_participant/<int:id>')
+@login_required
 def delete_participant(id):
     participant_ = participant.query.get_or_404(id)
     try:
@@ -599,6 +619,7 @@ def delete_participant(id):
 
 
 @app.route('/participants/<int:id>/interviews', methods=['GET', 'POST'])
+@login_required
 def participant_interviews(id):
     participant_ = participant.query.get_or_404(id)
     selected_year = request.args.get('year')
@@ -612,6 +633,7 @@ def participant_interviews(id):
     return render_template('interviews.html', interviews=interviews, participant=participant_, evenements=evenements, selected_year=selected_year)
         
 @app.route('/participants/<int:id>/add_interview', methods=['GET', 'POST'])
+@login_required
 def add_interview(id):
     employes = employe_rh.query.all()
     entreprises = entreprise.query.all()
@@ -641,6 +663,7 @@ def add_interview(id):
 
 
 @app.route('/participants/<int:id>/edit_interview/<int:interview_id>', methods=['GET', 'POST'])
+@login_required
 def edit_interview(id, interview_id):
     interview = postuler.query.get_or_404(interview_id)
     employes = employe_rh.query.all()
@@ -666,6 +689,7 @@ def edit_interview(id, interview_id):
     return render_template('edit_interview.html', interview=interview, employes=employes, entreprises=entreprises, years=years)
 
 @app.route('/participants/<int:id>/delete_interview/<int:interview_id>')
+@login_required
 def delete_interview(id, interview_id):
     interview = postuler.query.get_or_404(interview_id)
     try:
@@ -678,6 +702,13 @@ def delete_interview(id, interview_id):
         print(str(e))
         flash('An error occurred', 'error')
         return redirect(f'/participants/{id}/interviews')
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    session.pop('user', None) 
+    return redirect("/login")
 
 if __name__ == "__main__":
     

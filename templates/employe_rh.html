@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100..900&display=swap" rel="stylesheet">
-</head>
+</head> 
 <body>
     <div class="sidebar">
         <div class="sidebar-logo">Dashboard</div>
@@ -23,7 +23,7 @@
             </li>
             <li class="active">
                 <a href="/employe_rh"><i class="fas fa-users"></i> Employés RH</a>
-            </li>
+            </li> 
             <li>
                 <a href="/events"><i class="fas fa-calendar-alt"></i> Events</a>
             </li>
@@ -31,10 +31,8 @@
                 <a href="/participants"><i class="fas fa-user-friends"></i> Participants</a>
             </li>
             <li>
-                <a href="/entretients"><i class="fas fa-calendar-alt"></i> Entretients</a>
-            </li>
-            <li>
-                <a href="/Logout"><i class="fas fa-cog"></i> Logout</a>
+                <a href="/logout" onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?')"
+                ><i class="fas fa-cog"></i> Logout</a>
             </li>
         </ul>
     </div>
@@ -95,7 +93,7 @@
                         <td class="btns">
                             <a href="/employe_rh/edit_employe_rh/{{ employe.RH_id }}">
                                 <button class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
-                            </a>
+                            </a> 
                             <a href="/employe_rh/delete_employe_rh/{{ employe.RH_id }}">
                                 <button class="delete-btn" onclick="return confirm('Are you sure you want to delete this employee?')">
                                     <i class="fa-solid fa-trash"></i>

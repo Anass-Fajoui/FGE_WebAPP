@@ -30,14 +30,12 @@
             <li>
                 <a href="/participants"><i class="fas fa-user-friends"></i> Participants</a>
             </li>
-            <li class="active">
-                <a href="/entretients"><i class="fas fa-calendar-alt"></i> Entretients</a>
-            </li>
             <li>
-                <a href="/Logout"><i class="fas fa-cog"></i> Logout</a>
+                <a href="/logout" onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?')"
+                ><i class="fas fa-cog"></i> Logout</a>
             </li>
-        </ul>
-    </div>
+        </ul> 
+    </div> 
 
     <div class="main-content">
         <div class="content-header">
@@ -48,7 +46,7 @@
             <a href="/participants/{{ participant.Participant_id }}/add_interview">
                 <button class="add-btn"><i class="fa-solid fa-user-plus"></i> Add New Interview</button>
             </a>
-        </div>
+        </div> 
         
         <div class="filter-section">
             <form method="get" action="/participants/{{ participant.Participant_id }}/interviews">
