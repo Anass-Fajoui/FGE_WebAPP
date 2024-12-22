@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <title>Members List</title>
+    <title>Participant List</title>
     <link rel="stylesheet" href="/static/members.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.min.css" rel="stylesheet">
     
@@ -43,56 +43,31 @@
 
     <div class="main-content">
         <div class="content-header">
-            <h1>Gérer les membres</h1>
+            <h1>Gérer les participants</h1>
             
         </div>
         <div class="search-bar">
-            <a href="/members/add_member">
-                <button class="add-btn"><i class="fa-solid fa-user-plus"></i> Add New Member</button>
+            <a href="/participants/add_participant">
+                <button class="add-btn"><i class="fa-solid fa-user-plus"></i> Add New Participant</button>
             </a>
-            <form method="GET" action="/members">
+            <form method="GET" action="/participants">
                 <input type="text" name="search" placeholder="Rechercher par nom ou email" value="{{ request.args.get('search', '') }}">
                 <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
         </div>
         
         <div class="filter-section">
-            <form method="get" action="/members">
+            <form method="get" action="/participants">
                 <div class="filter-group">
-                    <label for="clubFilter">Filter by Club:</label>
-                    <select name="Club_id" id="clubFilter">
-                        <option value="">Tous</option>
-                        <option value="1">FGE Inpt</option>
-                        <option value="2">FGE Ensias</option>
-                        <option value="3">FGE Insea</option>
+                    <label for="clubFilter">Filter by Year:</label>
+                    <select name="year" id="clubFilter">
+                        <option value="">Select Year</option>
+                        {% for evenement in evenements %}
+                        <option value="{{ evenement.Year }}" {% if year == evenement.Year|string %}selected{% endif %}>{{ evenement.Year }}</option>
+                        {% endfor %}
+
                     </select>
                 </div>
-                
-                <fieldset>
-                    <legend>Filter by Cellules:</legend>
-                    <label>
-                        <input type="checkbox" name="Cellule_id" value=""> Tous
-                    </label>
-                    <label>
-                        <input type="checkbox" name="Cellule_id" value="1"> Media
-                    </label>
-                    <label>
-                        <input type="checkbox" name="Cellule_id" value="2"> Technique
-                    </label>
-                    <label>
-                        <input type="checkbox" name="Cellule_id" value="3"> Logistique
-                    </label>
-                    <label>
-                        <input type="checkbox" name="Cellule_id" value="4"> Prospection
-                    </label>
-                    <label>
-                        <input type="checkbox" name="Cellule_id" value="5"> Rédaction
-                    </label>
-                    <label>
-                        <input type="checkbox" name="Cellule_id" value="6"> Sponsoring
-                    </label>
-                </fieldset>
-                
                 <button type="submit" class="filter-button">Apply Filters</button>
             </form>
         </div>
@@ -101,48 +76,32 @@
             <table>
                 <thead>
                     <tr> 
-                        <th class="idCol">ID</th>
+                        <th class="idCol" style="text-align: center;">ID</th>
                         <th class="nomCol">Nom</th>
                         <th class="prenomCol">Prénom</th>
                         <th class="emailCol">Email</th>
-                        <th class="roleCol">Rôle</th>
-                        <th class="clubCol">Club</th>
-                        <!-- <th class="cellulecol">Cellules</th> -->
                         <th class="btns"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for member in members %}
+                    {% for participant in participants %}
                     <tr>
-                        <td class="idCol" style="text-align: center;">{{ member.Membre_id }}</td>
-                        <td class="nomCol">{{ member.Nom }}</td>
-                        <td class="prenomCol">{{ member.Prenom }}</td>
-                        <td class="emailCol">{{ member.Email }}</td>
-                        <td class="roleCol">{{ member.Role }}</td>
-                        <td class="clubCol">
-                            {% if member.Club_id == 1 %}
-                            FGE Inpt
-                            {% elif member.Club_id == 2 %}
-                            FGE Ensias
-                            {% elif member.Club_id == 3 %}
-                            FGE Insea
-                            {% else %}
-                            Unknown Club
-                            {% endif %}
-                        </td>
-                        <!-- <td class="cellulecol">Sponsoring, media, design</td> -->
+                        <td class="idCol" style="text-align: center;">{{ participant.Participant_id }}</td>
+                        <td class="nomCol">{{ participant.P_Nom}}</td>
+                        <td class="prenomCol">{{ participant.P_Prenom }}</td>
+                        <td class="emailCol">{{ participant.P_Email }}</td>
                         <td class="btns">
-                            <a href="/members/edit_member/{{ member.Membre_id }}">
+                            <a href="/participants/edit_participant/{{ participant.Participant_id }}">
                                 <button class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
                             </a>
-                            <a href="/members/delete_member/{{ member.Membre_id }}">
-                                <button class="delete-btn" onclick="return confirm('Are you sure you want to delete that member?')"><i class="fa-solid fa-trash"></i></button>
+                            <a href="/participants/delete_participant/{{ participant.Participant_id }}">
+                                <button class="delete-btn" onclick="return confirm('Are you sure you want to delete that participant?')"><i class="fa-solid fa-trash"></i></button>
                             </a>
                         </td>
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="7" style="text-align: center; padding:20px">Aucun membre</td>
+                        <td colspan="4" style="text-align: center; padding:20px">Aucun Participant</td>
                     </tr>
                     {% endfor %}
                     

@@ -515,6 +515,87 @@ def delete_employe_rh(id):
         return redirect("/employe_rh")
    
 
+@app.route('/participants')
+def list_participants():
+    year = request.args.get('year')
+    search_query = request.args.get('search', '')
+
+    query = participant.query
+
+    if search_query:
+        query = query.filter(
+            db.or_(
+                participant.P_Nom.ilike(f'%{search_query}%'),
+                participant.P_Prenom.ilike(f'%{search_query}%'),
+                participant.P_Email.ilike(f'%{search_query}%')
+            )
+        )
+
+    if year:
+        query = query.join(postuler, postuler.Participant_id == participant.Participant_id).filter(postuler.Year==year)
+
+    evenements = evenement.query.all()
+    participants = query.all()
+
+    return render_template('participants.html', participants=participants, evenements=evenements,year=year, search=search_query)
+
+@app.route('/participants/add_participant', methods=['GET', 'POST'])
+def add_participant():
+    if request.method == 'POST':
+        nom = request.form['nom']
+        prenom = request.form['prenom']
+        email = request.form['email']
+
+        new_participant = participant(P_Nom=nom, P_Prenom=prenom, P_Email=email)
+        try:
+            db.session.add(new_participant)
+            db.session.commit()
+            flash('Participant added successfully!', 'success')
+            return redirect('/participants')
+        except Exception as e:
+            db.session.rollback()
+            print(str(e))
+            flash('An error occurred', 'error')
+            return redirect('/participants/add_participant')
+        
+
+    return render_template('add_participant.html')
+
+@app.route('/participants/edit_participant/<int:id>', methods=['GET', 'POST'])
+def edit_participant(id):
+    participant_ = participant.query.get_or_404(id)
+
+    if request.method == 'POST':
+        participant_.P_Nom = request.form['nom']
+        participant_.P_Prenom = request.form['prenom']
+        participant_.P_Email = request.form['email']
+
+        try:
+            db.session.commit()
+            flash('Participant updated successfully!', 'success')
+            return redirect("/participants")
+        except Exception as e:
+            db.session.rollback()
+            print(str(e))
+            flash('An error occurred', 'error')
+            return redirect("/participants/edit_participant/" + str(id))
+        
+
+    return render_template('edit_participant.html', participant=participant_)
+
+@app.route('/participants/delete_participant/<int:id>')
+def delete_participant(id):
+    participant_ = participant.query.get_or_404(id)
+    try:
+        db.session.delete(participant_)
+        db.session.commit()
+        flash('Participant deleted successfully!')
+        return redirect("/participants")
+    except Exception as e:
+        db.session.rollback()
+        print(str(e))
+        flash('An error occurred', 'error')
+        return redirect("/participants")
 
 
 

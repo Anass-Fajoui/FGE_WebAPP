@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/add_member.css">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <title>Add Event</title>
+</head>
+<body>
+    
+    <h1>Add Event</h1>
+    <div class="container">
+        <form method="POST">
+            <div class="form-group">
+                <label for="nom">Nom: </label>
+                <input type="text" name="nom" required>
+            </div>
+
+            <div class="form-group">
+                <label for="nom">Prenom: </label>
+                <input type="text" name="prenom" required>
+            </div>
+            <div class="form-group">
+                <label for="nom">Email: </label>
+                <input type="email" name="email" required>
+            </div>
+        
+            <button type="submit">Add Participant</button>
+        </form>
+        
+    </div>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.all.min.js"></script>
+ 
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <script>
+               Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "{{ messages[0] }}"
+                    });
+            </script>
+        {% endif %}
+    {% endwith %}
+    
+</body>
+</html>

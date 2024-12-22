@@ -60,14 +60,6 @@ class evenement(db.Model):
     Club_id = db.Column(db.Integer, nullable=False)
 
 
-class participant(db.Model):
-    __tablename__ = 'participant'
-
-    Participant_id = db.Column(db.Integer, primary_key=True)
-    P_Nom = db.Column(db.String(50))
-    P_Prenom = db.Column(db.String(50))
-    P_Email = db.Column(db.String(100))
-
 class employe_rh(db.Model):
     __tablename__ = 'employe_rh'
 
@@ -78,6 +70,14 @@ class employe_rh(db.Model):
     Entreprise_id = db.Column(db.Integer, db.ForeignKey('entreprise.Entreprise_id'), nullable=False)
     entreprise = db.relationship('entreprise', backref='employes')
 
+class participant(db.Model):
+    __tablename__ = 'participant'
+
+    Participant_id = db.Column(db.Integer, primary_key=True)
+    P_Nom = db.Column(db.String(50))
+    P_Prenom = db.Column(db.String(50))
+    P_Email = db.Column(db.String(100))
+    
 class postuler(db.Model):
     __tablename__ = 'postuler'
 
