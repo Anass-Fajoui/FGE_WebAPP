@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/add_member.css">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <title>Edit Employé RH</title>
+</head>
+<body>
+    
+    <h1>Edit Employé RH</h1>
+    <div class="container">
+        <form method="POST">
+            <div class="form-group">
+                <label for="nom">Nom: </label>
+                <input type="text" name="nom" value="{{ employe.RH_Nom }}" required>
+            </div>
+            <div class="form-group">
+                <label for="prenom">Prenom: </label>
+                <input type="text" name="prenom" value="{{ employe.RH_Prenom }}" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email: </label>
+                <input type="email" name="email" value="{{employe.RH_email}}" required>
+            </div>
+        
+            <div class="form-group">
+                <label for="entreprise_id">Entreprise: </label>
+                <select id="entreprise_id" name="entreprise_id" required>
+                    <option value="">Select Entreprise</option>
+                    {% for entreprise in entreprises %}
+                        <option value="{{ entreprise.Entreprise_id }}" {% if employe.Entreprise_id == entreprise.Entreprise_id %}selected{% endif %}>{{ entreprise.Ent_Nom }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        
+            <button type="submit">Edit Employé RH</button>
+        </form>
+        
+    </div>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.all.min.js"></script>
+ 
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <script>
+               Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "{{ messages[0] }}"
+                    });
+            </script>
+        {% endif %}
+    {% endwith %}
+    
+</body>
+</html>

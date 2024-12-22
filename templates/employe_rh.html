@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <title>Events List</title>
+    <title>Employés RH</title>
     <link rel="stylesheet" href="../static/members.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="sidebar">
@@ -18,13 +18,13 @@
             <li>
                 <a href="/members"><i class="fas fa-users"></i> Membres</a>
             </li>
-            <li> 
+            <li>
                 <a href="/sponsors"><i class="fas fa-handshake"></i> Sponsors</a>
             </li>
-            <li>
+            <li class="active">
                 <a href="/employe_rh"><i class="fas fa-users"></i> Employés RH</a>
             </li>
-            <li class="active">
+            <li>
                 <a href="/events"><i class="fas fa-calendar-alt"></i> Events</a>
             </li>
             <li>
@@ -41,33 +41,34 @@
 
     <div class="main-content">
         <div class="content-header">
-            <h1>Gérer les événements</h1>
+            <h1>Gérer les Employés RH</h1>
         </div>
-         
+        
         <div class="search-bar">
-            <a href="/events/add_event">
-                <button class="add-btn"><i class="fa-solid fa-user-plus"></i> Add New Event</button>
+            <a href="/employe_rh/add_employe_rh">
+                <button class="add-btn"><i class="fa-solid fa-user-plus"></i> Add New Employé RH</button>
             </a>
-            <form method="GET" action="/events">
-                <input type="text" name="search" placeholder="Rechercher par année" value="{{ request.args.get('search', '') }}">
+            <form method="GET" action="/employe_rh">
+                <input type="text" name="search" placeholder="Rechercher par nom ou email" value="{{ request.args.get('search', '') }}">
                 <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
         </div>
         
         <div class="filter-section">
-            <form method="get" action="/events">
+            <form method="get" action="/employe_rh">
                 <div class="filter-group">
-                    <label for="clubFilter">Filter by Club ID:</label>
-                    <select name="filter_club" id="clubFilter">
-                        <option value="">Select Club</option>
-                        
-                        <option value="1" {% if selected_club == 1|string %}selected{% endif %}>FGE Inpt</option>
-                        <option value="2" {% if selected_club == 2|string %}selected{% endif %}>FGE Ensias</option>
-                        <option value="3" {% if selected_club == 3|string %}selected{% endif %}>FGE Insea</option>
-
+                    <label for="entrepriseFilter">Filter by Entreprise:</label>
+                    <select name="entreprise_id" id="entrepriseFilter">
+                        <option value="">Select Entreprise</option>
+                        {% for entreprise in entreprises %}
+                        <option value="{{ entreprise.Entreprise_id }}" 
+                                {% if selected_entreprise_id == entreprise.Entreprise_id|string %}selected{% endif %}>
+                            {{ entreprise.Ent_Nom }}
+                        </option>
+                        {% endfor %}
                     </select>
                 </div>
-                <button type="submit" class="filter-button">Apply Filters</button>
+                <button type="submit" class="filter-button">Apply Filter</button>
             </form>
         </div>
         
@@ -75,38 +76,36 @@
             <table>
                 <thead>
                     <tr> 
-                        <th class="yearCol">Year</th>
-                        <th class="clubCol">Club organisateur</th>
+                        <th class="idCol" style="text-align: center; width: 60px;">ID</th>
+                        <th class="nomCol">Nom</th>
+                        <th class="prenomCol">Prénom</th>
+                        <th class="emailCol">Email</th>
+                        <th class="entCol">Entreprise</th>
                         <th class="btns"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for event in events %}
+                    {% for employe in employes %}
                     <tr>
-                        <td class="yearCol">{{ event.Year }}</td>
-                        <td class="clubCol">
-                            {% if event.Club_id == 1 %}
-                            FGE Inpt
-                            {% elif event.Club_id == 2 %}
-                            FGE Ensias
-                            {% elif event.Club_id == 3 %}
-                            FGE Insea
-                            {% else %}
-                            Unknown Club
-                            {% endif %}
-                        </td>
+                        <td class="idCol" style="text-align: center;">{{ employe.RH_id }}</td>
+                        <td class="nomCol">{{ employe.RH_Nom }}</td>
+                        <td class="prenomCol">{{ employe.RH_Prenom }}</td>
+                        <td class="emailCol">{{ employe.RH_email }}</td>
+                        <td class="entCol">{{ employe.entreprise.Ent_Nom }}</td>
                         <td class="btns">
-                            <a href="/events/edit_event/{{ event.Year }}">
+                            <a href="/employe_rh/edit_employe_rh/{{ employe.RH_id }}">
                                 <button class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
                             </a>
-                            <a href="/events/delete_event/{{ event.Year }}">
-                                <button class="delete-btn" onclick="return confirm('Are you sure you want to delete this event?')"><i class="fa-solid fa-trash"></i></button>
+                            <a href="/employe_rh/delete_employe_rh/{{ employe.RH_id }}">
+                                <button class="delete-btn" onclick="return confirm('Are you sure you want to delete this employee?')">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
                             </a>
                         </td>
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="3" style="text-align: center; padding:20px">Aucun événement</td>
+                        <td colspan="6" style="text-align: center; padding:20px">Aucun employé RH</td>
                     </tr>
                     {% endfor %}
                 </tbody>

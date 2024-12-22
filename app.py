@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
-from models import db, Membre, s_inscrire, entreprise, sponsoriser, evenement
+from models import db, Membre, s_inscrire, entreprise, sponsoriser, evenement, participant, employe_rh, postuler
 
 app = Flask(__name__)
 
@@ -437,6 +437,87 @@ def delete_event(id):
     db.session.commit()
     flash('Event deleted successfully', 'success')
     return redirect('/events')
+
+
+@app.route('/employe_rh')
+def manage_employe_rh():
+    entreprise_id = request.args.get('entreprise_id')
+    search = request.args.get('search')
+
+    
+    entreprises = entreprise.query.all()
+    query = employe_rh.query
+    if entreprise_id:
+        query = query.filter_by(Entreprise_id=entreprise_id)
+    if search:
+        query = query.filter((employe_rh.RH_Nom.like(f"%{search}%")) | (employe_rh.RH_Prenom.like(f"%{search}%")) | (employe_rh.RH_email.like(f"%{search}%")))
+
+    employes = query.all()
+    return render_template('employe_rh.html', employes=employes, entreprises=entreprises, selected_entreprise_id=entreprise_id, search=search)
+
+@app.route('/employe_rh/add_employe_rh', methods=['GET', 'POST'])
+def add_employe_rh():
+    if request.method == 'POST':
+        nom = request.form['nom']
+        prenom = request.form['prenom']
+        email = request.form['email']
+        entreprise_id = request.form['entreprise_id']
+
+        new_employe = employe_rh(RH_Nom=nom, RH_Prenom=prenom, RH_email=email, Entreprise_id=entreprise_id)
+        try :
+            db.session.add(new_employe)
+            db.session.commit()
+            flash('Employe added successfully!', 'success')
+            return redirect('/employe_rh')
+        except Exception as e:
+            db.session.rollback()
+            print(str(e))
+            flash('An error occurred', 'error')
+            return redirect('/employe_rh/add_employe_rh')
+
+    entreprises = entreprise.query.all()
+    return render_template('add_employe_rh.html', entreprises=entreprises)
+
+@app.route('/employe_rh/edit_employe_rh/<int:id>', methods=['GET', 'POST'])
+def edit_employe_rh(id):
+    employe = employe_rh.query.get_or_404(id)
+    entreprises = entreprise.query.all()
+    if request.method == 'POST':
+        employe.RH_Nom = request.form['nom']
+        employe.RH_Prenom = request.form['prenom']
+        employe.RH_email = request.form['email']
+        employe.Entreprise_id = request.form['entreprise_id']
+        try:
+            db.session.commit()
+            flash('Employe updated successfully!', 'success')
+            return redirect("/employe_rh")
+        except Exception as e:
+            db.session.rollback()
+            print(str(e))
+            flash('An error occurred', 'error')
+            return redirect("/employe_rh")
+        
+
+    return render_template('edit_employe_rh.html', employe=employe, entreprises=entreprises)
+
+@app.route('/employe_rh/delete_employe_rh/<int:id>')
+def delete_employe_rh(id):
+    employe = employe_rh.query.get_or_404(id)
+    try:
+        db.session.delete(employe)
+        db.session.commit()
+        flash('Employe deleted successfully!')
+        return redirect("/employe_rh")
+    except Exception as e:
+        db.session.rollback()
+        print(str(e))
+        flash('An error occurred', 'error')
+        return redirect("/employe_rh")
+   
+
+
+
+
 
 if __name__ == "__main__":
     

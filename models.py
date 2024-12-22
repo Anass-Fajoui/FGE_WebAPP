@@ -58,3 +58,31 @@ class evenement(db.Model):
     __tablename__ = 'evenement'
     Year = db.Column(db.Integer, primary_key=True)
     Club_id = db.Column(db.Integer, nullable=False)
+
+
+class participant(db.Model):
+    __tablename__ = 'participant'
+
+    Participant_id = db.Column(db.Integer, primary_key=True)
+    P_Nom = db.Column(db.String(50))
+    P_Prenom = db.Column(db.String(50))
+    P_Email = db.Column(db.String(100))
+
+class employe_rh(db.Model):
+    __tablename__ = 'employe_rh'
+
+    RH_id = db.Column(db.Integer, primary_key=True)
+    RH_Nom = db.Column(db.String(50))
+    RH_Prenom = db.Column(db.String(50))
+    RH_email = db.Column(db.String(100))
+    Entreprise_id = db.Column(db.Integer, db.ForeignKey('entreprise.Entreprise_id'), nullable=False)
+    entreprise = db.relationship('entreprise', backref='employes')
+
+class postuler(db.Model):
+    __tablename__ = 'postuler'
+
+    Participant_id = db.Column(db.Integer, primary_key=True)
+    RH_id = db.Column(db.Integer, primary_key=True)
+    Entreprise_id = db.Column(db.Integer, primary_key=True)
+    Year = db.Column(db.Integer, primary_key=True)
+    Poste = db.Column(db.String(100), nullable=False)
