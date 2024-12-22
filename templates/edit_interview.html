@@ -15,7 +15,7 @@
         <form method="POST">
             <div class="form-group">
                 <label for="entreprise">Entreprise: </label>
-                <select name="entreprise" id="" required>
+                <select name="entreprise" id="entrepriseSelect" required>
                     <option value="">Choisir Entreprise</option>
                     {% for entreprise in entreprises %}
                         <option value="{{entreprise.Entreprise_id}}" {% if interview.Entreprise_id == entreprise.Entreprise_id %}selected{% endif %}>{{entreprise.Ent_Nom}}</option>
@@ -25,12 +25,11 @@
 
             <div class="form-group">
                 <label for="rh_id">Employé rh: </label>
-                <select name="rh_id" id="" required>
+                <select name="rh_id" id="rhSelect" required>
                     <option value="">Choisir Employé RH</option>
                     {% for rh in employes %}
                         <option value="{{ rh.RH_id }}" {% if interview.RH_id == rh.RH_id %}selected{% endif %}>{{ rh.RH_Nom }} {{ rh.RH_Prenom }}</option>
                     {% endfor %}
-
                 </select>
             </div>
 
@@ -51,11 +50,63 @@
         
             <button type="submit">Modifier Entretien</button>
         </form>
-        
     </div>
  
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.all.min.js"></script>
     
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const entrepriseSelect = document.getElementById('entrepriseSelect');
+        const rhSelect = document.getElementById('rhSelect');
+        
+        // Store all RH employees data
+        const allEmployes = [
+            {% for rh in employes %}
+                {
+                    id: "{{ rh.RH_id }}",
+                    nom: "{{ rh.RH_Nom }}",
+                    prenom: "{{ rh.RH_Prenom }}",
+                    entreprise_id: "{{ rh.Entreprise_id }}"
+                },
+            {% endfor %}
+        ];
+
+        // Function to update RH select options
+        function updateRhOptions(entrepriseId) {
+            // Clear current options
+            rhSelect.innerHTML = '<option value="">Choisir Employé RH</option>';
+            
+            if (!entrepriseId) {
+                rhSelect.disabled = true;
+                return;
+            }
+
+            // Filter and add relevant employees
+            const filteredEmployes = allEmployes.filter(emp => emp.entreprise_id === entrepriseId);
+            
+            filteredEmployes.forEach(emp => {
+                const option = document.createElement('option');
+                option.value = emp.id;
+                option.textContent = `${emp.nom} ${emp.prenom}`;
+                // Check if this was the previously selected employee
+                if (emp.id === "{{ interview.RH_id }}") {
+                    option.selected = true;
+                }
+                rhSelect.appendChild(option);
+            });
+
+            rhSelect.disabled = false;
+        }
+
+        // Add event listener for entreprise select
+        entrepriseSelect.addEventListener('change', function() {
+            updateRhOptions(this.value);
+        });
+
+        // Initialize the RH select with the current enterprise's employees
+        updateRhOptions(entrepriseSelect.value);
+    });
+    </script>
     
     {% with messages = get_flashed_messages() %}
         {% if messages %}
