@@ -70,7 +70,7 @@
                 <div class="filter-group">
                     <label for="clubFilter">Filtrer par Année:</label>
                     <select name="year" id="clubFilter">
-                        <option value="">Choisir Year</option>
+                        <option value="">Choisir Année</option>
                         {% for evenement in evenements %}
                         <option value="{{ evenement.Year }}" {% if year == evenement.Year|string %}selected{% endif %}>{{ evenement.Year }}</option>
                         {% endfor %}
