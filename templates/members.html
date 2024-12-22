@@ -46,7 +46,7 @@
         </div>
         <div class="search-bar">
             <a href="/members/add_member">
-                <button class="add-btn"><i class="fa-solid fa-user-plus"></i> Add New Member</button>
+                <button class="add-btn"><i class="fa-solid fa-user-plus"></i> Ajouter membre</button>
             </a>
             <form method="GET" action="/members">
                 <input type="text" name="search" placeholder="Rechercher par nom ou email" value="{{ request.args.get('search', '') }}">
@@ -57,7 +57,7 @@
         <div class="filter-section">
             <form method="get" action="/members">
                 <div class="filter-group">
-                    <label for="clubFilter">Filter by Club:</label>
+                    <label for="clubFilter">Filtrer par Club:</label>
                     <select name="Club_id" id="clubFilter">
                         <option value="">Tous</option>
                         <option value="1">FGE Inpt</option>
@@ -91,7 +91,7 @@
                     </label>
                 </fieldset>
                 
-                <button type="submit" class="filter-button">Apply Filters</button>
+                <button type="submit" class="filter-button">Filtrer</button>
             </form>
         </div>
         
@@ -134,7 +134,7 @@
                                 <button class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
                             </a>
                             <a href="/members/delete_member/{{ member.Membre_id }}">
-                                <button class="delete-btn" onclick="return confirm('Are you sure you want to delete that member?')"><i class="fa-solid fa-trash"></i></button>
+                                <button class="delete-btn" onclick="return confirm('Êtes-vous sûr de supprimer ce membre?')"><i class="fa-solid fa-trash"></i></button>
                             </a>
                         </td>
                     </tr>

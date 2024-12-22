@@ -57,7 +57,7 @@
         </div>
         <div class="search-bar">
             <a href="/participants/add_participant">
-                <button class="add-btn"><i class="fa-solid fa-user-plus"></i> Add New Participant</button>
+                <button class="add-btn"><i class="fa-solid fa-user-plus"></i> Ajouter Participant</button>
             </a>
             <form method="GET" action="/participants">
                 <input type="text" name="search" placeholder="Rechercher par nom ou email" value="{{ request.args.get('search', '') }}">
@@ -68,16 +68,16 @@
         <div class="filter-section">
             <form method="get" action="/participants">
                 <div class="filter-group">
-                    <label for="clubFilter">Filter by Year:</label>
+                    <label for="clubFilter">Filtrer par Année:</label>
                     <select name="year" id="clubFilter">
-                        <option value="">Select Year</option>
+                        <option value="">Choisir Year</option>
                         {% for evenement in evenements %}
                         <option value="{{ evenement.Year }}" {% if year == evenement.Year|string %}selected{% endif %}>{{ evenement.Year }}</option>
                         {% endfor %}
 
                     </select>
                 </div>
-                <button type="submit" class="filter-button">Apply Filters</button>
+                <button type="submit" class="filter-button">Filtrer</button>
             </form>
         </div>
         
@@ -104,7 +104,7 @@
                                 <button class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
                             </a>
                             <a href="/participants/delete_participant/{{ participant.Participant_id }}">
-                                <button class="delete-btn" onclick="return confirm('Are you sure you want to delete that participant?')"><i class="fa-solid fa-trash"></i></button>
+                                <button class="delete-btn" onclick="return confirm('Êtes-vous sûr de supprimer ce participant?')"><i class="fa-solid fa-trash"></i></button>
                             </a>
                             <a href="/participants/{{ participant.Participant_id }}/interviews">
                                 <button class="interview-btn"><i class="fa-solid fa-right-from-bracket"></i></button>

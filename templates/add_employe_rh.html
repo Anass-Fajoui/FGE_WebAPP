@@ -6,11 +6,11 @@
     <link rel="stylesheet" href="../static/add_member.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.min.css" rel="stylesheet">
 
-    <title>Add Employé RH</title>
+    <title>Ajouter Employé RH</title>
 </head>
 <body>
     
-    <h1>Add Employé RH</h1>
+    <h1>Ajouter Employé RH</h1>
     <div class="container">
         <form method="POST">
             <div class="form-group">
@@ -29,14 +29,14 @@
             <div class="form-group">
                 <label for="entreprise_id">Entreprise: </label>
                 <select id="entreprise_id" name="entreprise_id" required>
-                    <option value="">Select Entreprise</option>
+                    <option value="">Choisir Entreprise</option>
                     {% for entreprise in entreprises %}
                         <option value="{{ entreprise.Entreprise_id }}">{{ entreprise.Ent_Nom }}</option>
                     {% endfor %}
                 </select>
             </div>
         
-            <button type="submit">Add Employé RH</button>
+            <button type="submit">Ajouter Employé RH</button>
         </form>
         
     </div>

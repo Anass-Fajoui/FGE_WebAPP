@@ -44,7 +44,7 @@
          
         <div class="search-bar">
             <a href="/events/add_event">
-                <button class="add-btn"><i class="fa-solid fa-user-plus"></i> Add New Event</button>
+                <button class="add-btn"><i class="fa-solid fa-user-plus"></i> Ajouter événement</button>
             </a>
             <form method="GET" action="/events">
                 <input type="text" name="search" placeholder="Rechercher par année" value="{{ request.args.get('search', '') }}">
@@ -55,9 +55,9 @@
         <div class="filter-section">
             <form method="get" action="/events">
                 <div class="filter-group">
-                    <label for="clubFilter">Filter by Club ID:</label>
+                    <label for="clubFilter">Filtrer par Club:</label>
                     <select name="filter_club" id="clubFilter">
-                        <option value="">Select Club</option>
+                        <option value="">Choisir Club</option>
                         
                         <option value="1" {% if selected_club == 1|string %}selected{% endif %}>FGE Inpt</option>
                         <option value="2" {% if selected_club == 2|string %}selected{% endif %}>FGE Ensias</option>
@@ -65,7 +65,7 @@
 
                     </select>
                 </div>
-                <button type="submit" class="filter-button">Apply Filters</button>
+                <button type="submit" class="filter-button">Filtrer</button>
             </form>
         </div>
         
@@ -73,7 +73,7 @@
             <table>
                 <thead>
                     <tr> 
-                        <th class="yearCol">Year</th>
+                        <th class="yearCol">Année</th>
                         <th class="clubCol">Club organisateur</th>
                         <th class="btns"></th>
                     </tr>
@@ -98,7 +98,7 @@
                                 <button class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
                             </a>
                             <a href="/events/delete_event/{{ event.Year }}">
-                                <button class="delete-btn" onclick="return confirm('Are you sure you want to delete this event?')"><i class="fa-solid fa-trash"></i></button>
+                                <button class="delete-btn" onclick="return confirm('Êtes-vous sûr de supprimer ce événement?')"><i class="fa-solid fa-trash"></i></button>
                             </a>
                         </td>
                     </tr>

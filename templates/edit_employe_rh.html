@@ -6,11 +6,11 @@
     <link rel="stylesheet" href="/static/add_member.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.min.css" rel="stylesheet">
 
-    <title>Edit Employé RH</title>
+    <title>Modifier Employé RH</title>
 </head>
-<body>
+<body> 
     
-    <h1>Edit Employé RH</h1>
+    <h1>Modifier Employé RH</h1>
     <div class="container">
         <form method="POST">
             <div class="form-group">
@@ -29,14 +29,14 @@
             <div class="form-group">
                 <label for="entreprise_id">Entreprise: </label>
                 <select id="entreprise_id" name="entreprise_id" required>
-                    <option value="">Select Entreprise</option>
+                    <option value="">Choisir Entreprise</option>
                     {% for entreprise in entreprises %}
                         <option value="{{ entreprise.Entreprise_id }}" {% if employe.Entreprise_id == entreprise.Entreprise_id %}selected{% endif %}>{{ entreprise.Ent_Nom }}</option>
                     {% endfor %}
                 </select>
             </div>
         
-            <button type="submit">Edit Employé RH</button>
+            <button type="submit">Modifier Employé RH</button>
         </form>
         
     </div>

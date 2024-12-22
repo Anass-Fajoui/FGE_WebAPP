@@ -48,7 +48,10 @@ def login_required(f):
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('dashboard.html')
+    members = Membre.query.count()
+    participants = participant.query.count()
+    sponsors = entreprise.query.count()
+    return render_template('dashboard.html', members=members, participants=participants, sponsors=sponsors)
 
 
 @app.route('/members')

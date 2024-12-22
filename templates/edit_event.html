@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/add_member.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.min.css" rel="stylesheet">
-    <title>Edit Event</title>
+    <title>Modifier Event</title>
 </head> 
 <body>
-    <h1>Edit Event</h1>
+    <h1>Modifier Event</h1>
     <div class="container">
         <form method="POST">
             <div class="form-group">
-                <label for="Year">Year: </label>
+                <label for="Year">Année: </label>
                 <input type="number" name="Year" value="{{ event.Year }}" required>
             </div>
         
@@ -25,7 +25,7 @@
                 </select>
             </div>
 
-            <button type="submit">Edit Member</button>
+            <button type="submit">Modifier Member</button>
         </form>
         
     </div>

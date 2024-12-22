@@ -43,7 +43,7 @@
         
         <div class="search-bar">
             <a href="/sponsors/add_sponsor">
-                <button class="add-btn"><i class="fa-solid fa-user-plus"></i> Add New Sponsor</button>
+                <button class="add-btn"><i class="fa-solid fa-user-plus"></i> Ajouter Sponsor</button>
             </a>
             <form method="GET" action="/sponsors">
                 <input type="text" name="search" placeholder="Rechercher par nom d'entreprise" value="{{ request.args.get('search', '') }}">
@@ -54,9 +54,9 @@
         <div class="filter-section">
             <form method="get" action="/sponsors">
                 <div class="filter-group">
-                    <label for="yearFilter">Filter by Year:</label>
+                    <label for="yearFilter">Filrer par Année:</label>
                     <select name="year" id="yearFilter">
-                        <option value="">Select Year</option>
+                        <option value="">Choisir Année</option>
                         {% for year in years %}
                         <option value="{{ year }}" {% if selected_year == year|string %}selected{% endif %}>{{ year }}</option>
                         {% endfor %}
@@ -64,9 +64,9 @@
                 </div> 
                 
                 <div class="filter-group">
-                    <label for="typeFilter">Filter by Sponsor Type:</label>
+                    <label for="typeFilter">Filtrer par type du Sponsor:</label>
                     <select name="sponsor_type" id="typeFilter">
-                        <option value="">Select Sponsor Type</option>
+                        <option value="">Choisir type du Sponsor</option>
                         
                         <option value="gold" {% if selected_sponsor_type == 'gold' %}selected{% endif %}>Gold</option>
                         <option value="platinium" {% if selected_sponsor_type == 'platinium' %}selected{% endif %}>Platinum</option>
@@ -75,7 +75,7 @@
                     </select>
                 </div>
                 
-                <button type="submit" class="filter-button">Apply Filters</button>
+                <button type="submit" class="filter-button">Filtrer</button>
             </form>
         </div>
         
@@ -84,7 +84,7 @@
                 <thead>
                     <tr> 
                         <th class="idCol" style="text-align: center; width: 60px;">ID</th>
-                        <th class="entCol">Sponsor Nom</th>
+                        <th class="entCol">Nom du Sponsor</th>
                         <!-- <th class="typeCol">Sponsorship Type</th> -->
                         <!-- <th class="yearCol">Year</th> -->
                         <th class="btns"></th>
@@ -102,7 +102,7 @@
                                 <button class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
                             </a>
                             <a href="/sponsors/delete_sponsor/{{ entreprise.Entreprise_id }}">
-                                <button class="delete-btn" onclick="return confirm('Are you sure you want to delete this sponsor?')"><i class="fa-solid fa-trash"></i></button>
+                                <button class="delete-btn" onclick="return confirm('Êtes-vous sûr de supprimer ce Sponsor?')"><i class="fa-solid fa-trash"></i></button>
                             </a> 
                         </td>
                     </tr>

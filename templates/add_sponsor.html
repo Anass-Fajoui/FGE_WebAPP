@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Sponsor</title>
+    <title>Ajouter Sponsor</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.4/sweetalert2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='add_sponsor.css') }}">
 </head>
 <body>
-    <h1>Add New Sponsor</h1>
+    <h1>Ajouter Sponsor</h1>
     
     <div class="container">
         <div class="form-card">
             <form method="POST" id="sponsorForm" >
                 <div class="form-group">
-                    <label class="form-label" for="Sponsor_name">Sponsor Name</label>
+                    <label class="form-label" for="Sponsor_name">Nom du Sponsor</label>
                     <input class="form-input" type="text" id="Sponsor_name" name="sponsor_name" required>
                 </div>
             
                 <div class="form-group">
-                    <label class="form-label">Sponsorship Years</label>
+                    <label class="form-label">Sponsorship</label>
                     <div class="years-container">
                         {% for year in years %}
                             <div class="year-group">
@@ -28,7 +28,7 @@
                                     <label for="year_{{ year }}">{{ year }}</label>
                                 </div>
                                 <select name="sponsor_type_{{ year }}" class="sponsor-type-select" disabled data-year="{{ year }}">
-                                    <option value="">Select Sponsorship Type</option>
+                                    <option value="">Choisir Type du Sponsorship</option>
                                     <option value="platinium">Platinum</option>
                                     <option value="gold">Gold</option>
                                     <option value="silver">Silver</option>
@@ -36,10 +36,10 @@
                             </div>
                         {% endfor %}
                     </div>
-                    <div class="error-message" id="yearError">Please select at least one year and its sponsorship type</div>
+                    <div class="error-message" id="yearError">Choisir au moins une année et son type du sponsorship</div>
                 </div>
             
-                <button type="submit" class="submit-button">Add Sponsor</button>
+                <button type="submit" class="submit-button">Ajouter Sponsor</button>
             </form>
         </div>
     </div>
