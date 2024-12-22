@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <title>Sponsors List</title>
-    <link rel="stylesheet" href="../static/members.css">
+    <link rel="stylesheet" href="/static/members.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +15,7 @@
     <div class="sidebar">
         <div class="sidebar-logo">Dashboard</div>
         <ul class="sidebar-menu">
-            <li>
+            <li> 
                 <a href="/members"><i class="fas fa-users"></i> Membres</a>
             </li>
             <li> 
@@ -41,43 +41,26 @@
 
     <div class="main-content">
         <div class="content-header">
-            <h1>Gérer les sponsors</h1>
+            <h1>Gérer les entretients</h1>
         </div>
         
         <div class="search-bar">
-            <a href="/sponsors/add_sponsor">
-                <button class="add-btn"><i class="fa-solid fa-user-plus"></i> Add New Sponsor</button>
+            <a href="/participants/{{ participant.Participant_id }}/add_interview">
+                <button class="add-btn"><i class="fa-solid fa-user-plus"></i> Add New Interview</button>
             </a>
-            <form method="GET" action="/sponsors">
-                <input type="text" name="search" placeholder="Rechercher par nom d'entreprise" value="{{ request.args.get('search', '') }}">
-                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </form>
         </div>
         
         <div class="filter-section">
-            <form method="get" action="/sponsors">
+            <form method="get" action="/participants/{{ participant.Participant_id }}/interviews">
                 <div class="filter-group">
                     <label for="yearFilter">Filter by Year:</label>
                     <select name="year" id="yearFilter">
                         <option value="">Select Year</option>
-                        {% for year in years %}
-                        <option value="{{ year }}" {% if selected_year == year|string %}selected{% endif %}>{{ year }}</option>
+                        {% for evenement in evenements %}
+                        <option value="{{ evenement.Year }}" {% if selected_year == evenement.Year|string %}selected{% endif %}>{{ evenement.Year }}</option>
                         {% endfor %}
                     </select>
                 </div>
-                
-                <div class="filter-group">
-                    <label for="typeFilter">Filter by Sponsor Type:</label>
-                    <select name="sponsor_type" id="typeFilter">
-                        <option value="">Select Sponsor Type</option>
-                        
-                        <option value="gold" {% if selected_sponsor_type == 'gold' %}selected{% endif %}>Gold</option>
-                        <option value="platinium" {% if selected_sponsor_type == 'platinium' %}selected{% endif %}>Platinum</option>
-                        <option value="silver" {% if selected_sponsor_type == 'silver' %}selected{% endif %}>Silver</option>
-                        
-                    </select>
-                </div>
-                
                 <button type="submit" class="filter-button">Apply Filters</button>
             </form>
         </div>
@@ -86,32 +69,32 @@
             <table>
                 <thead>
                     <tr> 
-                        <th class="idCol" style="text-align: center; width: 60px;">ID</th>
-                        <th class="entCol">Sponsor Nom</th>
-                        <!-- <th class="typeCol">Sponsorship Type</th> -->
-                        <!-- <th class="yearCol">Year</th> -->
+                        <th class="idCol" >Employé RH</th>
+                        <th class="entCol">Entreprise</th>
+                        <th class="typeCol">Year</th>
+                        <th class="yearCol">Poste</th>
                         <th class="btns"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for entreprise in entreprises %}
+                    {% for interview in interviews %}
                     <tr>
-                        <td class="idCol" style="text-align: center;">{{ entreprise.Entreprise_id }}</td>
-                        <td class="entCol">{{ entreprise.Ent_Nom }}</td>
-                        <!-- <td class="typeCol">{{ entreprise.Sponsor_type }}</td> -->
-                        <!-- <td class="yearCol">{{ entreprise.Year }}</td> -->
+                        <td class="idCol" >{{interview.employe_rh.RH_Nom}} {{interview.employe_rh.RH_Prenom}}</td>
+                        <td class="entCol">{{interview.entreprise.Ent_Nom}}</td>
+                        <td class="typeCol">{{interview.Year}}</td>
+                        <td class="yearCol">{{interview.Poste}}</td>
                         <td class="btns">
-                            <a href="/sponsors/edit_sponsor/{{ entreprise.Entreprise_id }}">
+                            <a href="/participants/{{ participant.Participant_id }}/edit_interview/{{ interview.id }}">
                                 <button class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
                             </a>
-                            <a href="/sponsors/delete_sponsor/{{ entreprise.Entreprise_id }}">
+                            <a href="/participants/{{ participant.Participant_id }}/delete_interview/{{ interview.id }}">
                                 <button class="delete-btn" onclick="return confirm('Are you sure you want to delete this sponsor?')"><i class="fa-solid fa-trash"></i></button>
                             </a>
                         </td>
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="5" style="text-align: center; padding:20px">Aucun sponsor</td>
+                        <td colspan="5" style="text-align: center; padding:20px">Aucun entretient</td>
                     </tr>
                     {% endfor %}
                 </tbody>

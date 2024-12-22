@@ -77,12 +77,18 @@ class participant(db.Model):
     P_Nom = db.Column(db.String(50))
     P_Prenom = db.Column(db.String(50))
     P_Email = db.Column(db.String(100))
-    
+
 class postuler(db.Model):
     __tablename__ = 'postuler'
 
-    Participant_id = db.Column(db.Integer, primary_key=True)
-    RH_id = db.Column(db.Integer, primary_key=True)
-    Entreprise_id = db.Column(db.Integer, primary_key=True)
-    Year = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    Participant_id = db.Column(db.Integer, db.ForeignKey('participant.Participant_id'))
+    RH_id = db.Column(db.Integer,  db.ForeignKey('employe_rh.RH_id'))
+    Entreprise_id = db.Column(db.Integer, db.ForeignKey('entreprise.Entreprise_id'))
+    Year = db.Column(db.Integer)
     Poste = db.Column(db.String(100), nullable=False)
+
+    participant = db.relationship('participant', backref='postuler')
+    employe_rh = db.relationship('employe_rh', backref='postuler')
+    entreprise = db.relationship('entreprise', backref='postuler')
+

@@ -598,7 +598,86 @@ def delete_participant(id):
         return redirect("/participants")
 
 
+@app.route('/participants/<int:id>/interviews', methods=['GET', 'POST'])
+def participant_interviews(id):
+    participant_ = participant.query.get_or_404(id)
+    selected_year = request.args.get('year')
+    print(selected_year)
+    interviews = postuler.query.filter_by(Participant_id=id)
 
+    if selected_year:
+        interviews = interviews.filter_by(Year=selected_year)
+
+    evenements = evenement.query.all()
+    return render_template('interviews.html', interviews=interviews, participant=participant_, evenements=evenements, selected_year=selected_year)
+        
+@app.route('/participants/<int:id>/add_interview', methods=['GET', 'POST'])
+def add_interview(id):
+    employes = employe_rh.query.all()
+    entreprises = entreprise.query.all()
+    years = evenement.query.all()
+
+    if request.method == 'POST':
+        
+        year = request.form['year']
+        rh_id = request.form['rh_id']
+        poste = request.form['poste']
+        entreprise_id = request.form['entreprise']
+
+        new_interview = postuler(Participant_id=id, RH_id=rh_id, Entreprise_id=entreprise_id, Year=year, Poste=poste)
+        try:
+            db.session.add(new_interview)
+            db.session.commit()
+            flash('Interview added successfully!', 'success')
+            return redirect(f'/participants/{id}/interviews')
+        except Exception as e:
+            db.session.rollback()
+            print(str(e))
+            flash('An error occurred', 'error')
+            return redirect(f'/participants/{id}/interviews/add_interview')
+
+    
+    return render_template('add_interview.html', employes=employes, entreprises=entreprises, years=years)
+
+
+@app.route('/participants/<int:id>/edit_interview/<int:interview_id>', methods=['GET', 'POST'])
+def edit_interview(id, interview_id):
+    interview = postuler.query.get_or_404(interview_id)
+    employes = employe_rh.query.all()
+    entreprises = entreprise.query.all()
+    years = evenement.query.all()
+
+    if request.method == 'POST':
+        interview.Year = request.form['year']
+        interview.RH_id = request.form['rh_id']
+        interview.Poste = request.form['poste']
+        interview.Entreprise_id = request.form['entreprise']
+
+        try:
+            db.session.commit()
+            flash('Interview updated successfully!', 'success')
+            return redirect(f'/participants/{id}/interviews')
+        except Exception as e:
+            db.session.rollback()
+            print(str(e))
+            flash('An error occurred', 'error')
+            return redirect(f'/participants/{id}/interviews/edit_interview/{interview_id}')
+
+    return render_template('edit_interview.html', interview=interview, employes=employes, entreprises=entreprises, years=years)
+
+@app.route('/participants/<int:id>/delete_interview/<int:interview_id>')
+def delete_interview(id, interview_id):
+    interview = postuler.query.get_or_404(interview_id)
+    try:
+        db.session.delete(interview)
+        db.session.commit()
+        flash('Interview deleted successfully!')
+        return redirect(f'/participants/{id}/interviews')
+    except Exception as e:
+        db.session.rollback()
+        print(str(e))
+        flash('An error occurred', 'error')
+        return redirect(f'/participants/{id}/interviews')
 
 if __name__ == "__main__":
     

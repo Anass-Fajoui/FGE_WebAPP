@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/add_member.css">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <title>Ajouter Entretien</title>
+</head>
+<body>
+    
+    <h1>Ajouter Entretien</h1>
+    <div class="container">
+        <form method="POST">
+            <div class="form-group">
+                <label for="entreprise">Entreprise: </label>
+                <select name="entreprise" id="" required>
+                    <option value="">Choisir Entreprise</option>
+                    {% for entreprise in entreprises %}
+                        <option value="{{entreprise.Entreprise_id}}">{{entreprise.Ent_Nom}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="rh_id">Employé rh: </label>
+                <select name="rh_id" id="" required>
+                    <option value="">Choisir Employé RH</option>
+                    {% for rh in employes %}
+                        <option value="{{ rh.RH_id }}" >{{ rh.RH_Nom }} {{ rh.RH_Prenom }}</option>
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="year">Year: </label>
+                <select name="year" id="" required>
+                    <option value="">Choisir Année</option>
+                    {% for year in years %}
+                        <option value="{{year.Year}}">{{year.Year}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        
+            <div class="form-group">
+                <label for="poste">Poste: </label>
+                <input type="text" name="poste" id="poste" required>
+            </div>
+        
+            <button type="submit">Ajouter Entretien</button>
+        </form>
+        
+    </div>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.all.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const entrepriseSelect = document.querySelector('select[name="entreprise"]');
+            const rhSelect = document.querySelector('select[name="rh_id"]');
+            
+            
+            const allEmployes = [
+                {% for rh in employes %}
+                    {
+                        id: "{{ rh.RH_id }}",
+                        nom: "{{ rh.RH_Nom }}",
+                        prenom: "{{ rh.RH_Prenom }}",
+                        entreprise_id: "{{ rh.Entreprise_id }}"
+                    },
+                {% endfor %}
+            ];
+        
+            
+            rhSelect.disabled = true;
+        
+            
+            function updateRhOptions(entrepriseId) {
+                
+                rhSelect.innerHTML = '<option value="">Choisir Employé RH</option>';
+                
+                if (!entrepriseId) {
+                    rhSelect.disabled = true;
+                    return;
+                }
+        
+                const filteredEmployes = allEmployes.filter(emp => emp.entreprise_id === entrepriseId);
+                
+                filteredEmployes.forEach(emp => {
+                    const option = document.createElement('option');
+                    option.value = emp.id;
+                    option.textContent = `${emp.nom} ${emp.prenom}`;
+                    rhSelect.appendChild(option);
+                });
+        
+                rhSelect.disabled = false;
+            }
+        
+            
+            entrepriseSelect.addEventListener('change', function() {
+                updateRhOptions(this.value);
+            });
+        });
+        </script>
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <script>
+               Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "{{ messages[0] }}"
+                    });
+            </script>
+        {% endif %}
+    {% endwith %}
+    
+</body>
+</html>

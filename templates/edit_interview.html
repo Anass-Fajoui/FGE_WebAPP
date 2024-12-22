@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/add_member.css">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <title>Modifier Entretien</title>
+</head>
+<body>
+    
+    <h1>Modifier Entretien</h1>
+    <div class="container">
+        <form method="POST">
+            <div class="form-group">
+                <label for="entreprise">Entreprise: </label>
+                <select name="entreprise" id="" required>
+                    <option value="">Choisir Entreprise</option>
+                    {% for entreprise in entreprises %}
+                        <option value="{{entreprise.Entreprise_id}}" {% if interview.Entreprise_id == entreprise.Entreprise_id %}selected{% endif %}>{{entreprise.Ent_Nom}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="rh_id">Employé rh: </label>
+                <select name="rh_id" id="" required>
+                    <option value="">Choisir Employé RH</option>
+                    {% for rh in employes %}
+                        <option value="{{ rh.RH_id }}" {% if interview.RH_id == rh.RH_id %}selected{% endif %}>{{ rh.RH_Nom }} {{ rh.RH_Prenom }}</option>
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="year">Year: </label>
+                <select name="year" id="" required>
+                    <option value="">Choisir Année</option>
+                    {% for year in years %}
+                        <option value="{{year.Year}}" {% if interview.Year == year.Year %}selected{% endif %}>{{year.Year}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        
+            <div class="form-group">
+                <label for="poste">Poste: </label>
+                <input type="text" name="poste" id="poste" value="{{interview.Poste}}" required>
+            </div>
+        
+            <button type="submit">Modifier Entretien</button>
+        </form>
+        
+    </div>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.4/dist/sweetalert2.all.min.js"></script>
+    
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <script>
+               Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "{{ messages[0] }}"
+                    });
+            </script>
+        {% endif %}
+    {% endwith %}
+    
+</body>
+</html>
