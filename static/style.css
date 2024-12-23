@@ -1,0 +1,1360 @@
+@import url('https://fonts.googleapis.com/css2?family=Gloock&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    line-height: 1.6;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.decorator-parent {
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 5%;
+    position: relative;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+    
+    .jeunesse-et-innovation-container {
+        font-size: 24px;
+        text-align: center;
+    }
+}
+
+/* Flexible Header */
+.asset-1-parent {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+}
+
+.asset-1-icon {
+    max-width: 100px;
+    margin-right: 1rem;
+}
+
+/* Responsive Navigation */
+.vector-parent {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem 0;
+}
+
+/* Flexible School Sections */
+.parent, .vector-group, .group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    margin: 2rem auto;
+}
+
+/* Responsive Cards */
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.card, .card1 {
+    flex: 0 1 250px;
+    margin: 0.5rem;
+}
+
+/* Responsive Testimonials */
+.testimonial-card, 
+.testimonial-card1, 
+.testimonial-card2 {
+    width: 100%;
+    max-width: 500px;
+    margin: 1rem auto;
+}
+
+/* Footer Responsive Layout */
+.footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 2rem 5%;
+}
+
+.resources-parent {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.social {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+/* Media Queries */
+@media (max-width: 1200px) {
+    .decorator-parent {
+        padding: 0 3%;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .resources-parent > div {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+}
+
+/* Hide or reduce decorative elements on mobile */
+@media (max-width: 480px) {
+    .decorator, 
+    .decorator1, 
+    .decorator2,
+    .decorator-icon,
+    .decorator-icon1,
+    .decorator-icon2 {
+        display: none;
+    }
+}
+body {
+    margin: 0;
+    line-height: normal;
+}
+
+.decorator-icon {
+    position: absolute;
+    top: 5007.5px;
+    left: calc(50% - 653px);
+    width: 1305.5px;
+    height: 2664.5px;
+}
+.frame-child {
+    position: absolute;
+    top: -61px;
+    left: 194px;
+    width: 1463.5px;
+    height: 1150px;
+}
+.decorator {
+    position: absolute;
+    top: 156px;
+    left: calc(50% + 759px);
+    filter: blur(600px);
+    border-radius: 50%;
+    background-color: #398935;
+    width: 334px;
+    height: 334px;
+}
+.decorator1 {
+    position: absolute;
+    top: 543px;
+    left: calc(50% - 1106px);
+    filter: blur(600px);
+    border-radius: 50%;
+    background-color: #c23535;
+    width: 334px;
+    height: 334px;
+}
+.asset-7-icon {
+    position: absolute;
+    top: 819px;
+    left: 1121px;
+    width: 93px;
+    height: 93px;
+    object-fit: cover;
+}
+.asset-10-icon {
+    position: absolute;
+    top: 2620px;
+    left: -386px;
+    width: 693px;
+    height: 693px;
+    object-fit: cover;
+}
+.jeunesse-et-innovation {
+    margin: 0;
+}
+.jeunesse-et-innovation-container {
+    position: absolute;
+    top: 844px;
+    left: calc(50% - 415px);
+    font-size: 40px;
+    color: #14416d;
+    display: inline-block;
+    width: 830px;
+    height: 186px;
+    font-family: Nohemi;
+}
+.group-child {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 10px;
+    background-color: #fff;
+    border: 1px solid #f0f0f0;
+    box-sizing: border-box;
+    width: 336px;
+    height: 151px;
+}
+.group-item {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 50%;
+    width: 68px;
+    height: 68px;
+    object-fit: cover;
+}
+.wisdom-new-and {
+    position: absolute;
+    top: 0px;
+    left: 86px;
+    display: inline-block;
+    width: 215px;
+}
+.ellipse-parent {
+    position: absolute;
+    top: 22px;
+    left: 17px;
+    width: 301px;
+    height: 96px;
+}
+.sameer-ceo {
+    position: absolute;
+    top: 115px;
+    left: 60px;
+    font-size: 14px;
+    color: #828282;
+    display: inline-block;
+    width: 215px;
+}
+.rectangle-parent {
+    position: absolute;
+    top: 804px;
+    left: 758px;
+    width: 336px;
+    height: 151px;
+    display: none;
+    text-align: left;
+}
+.decorator2 {
+    position: absolute;
+    top: 1979px;
+    left: 1520px;
+    filter: blur(600px);
+    border-radius: 50%;
+    background-color: #19406d;
+    width: 334px;
+    height: 334px;
+}
+.decorator3 {
+    position: absolute;
+    top: 2734px;
+    left: -18px;
+    filter: blur(600px);
+    border-radius: 50%;
+    background-color: #398935;
+    width: 334px;
+    height: 334px;
+}
+.decorator4 {
+    position: absolute;
+    top: 3594px;
+    left: 1653px;
+    filter: blur(600px);
+    border-radius: 50%;
+    background-color: #c23535;
+    width: 334px;
+    height: 334px;
+}
+.decorator5 {
+    position: absolute;
+    top: 3475px;
+    left: 759px;
+    filter: blur(600px);
+    border-radius: 50%;
+    background-color: #f78430;
+    width: 334px;
+    height: 334px;
+}
+.login {
+    position: absolute;
+    top: 244.14px;
+    left: 0px;
+    line-height: 100%;
+    display: inline-block;
+    width: 80px;
+    height: 30.3px;
+}
+.pricing {
+    position: absolute;
+    top: 173.79px;
+    left: 0px;
+    line-height: 100%;
+    display: inline-block;
+    width: 103.4px;
+    height: 30.3px;
+}
+.features {
+    position: absolute;
+    top: 103.45px;
+    left: 0px;
+    line-height: 100%;
+    display: inline-block;
+    width: 132.4px;
+    height: 30.3px;
+}
+.resources1 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    font-size: 24px;
+    font-weight: 500;
+    font-family: Nohemi;
+    color: #313131;
+    display: inline-block;
+    width: 215.2px;
+    height: 34.5px;
+}
+.resources {
+    position: absolute;
+    top: 0px;
+    left: 673.1px;
+    width: 215.2px;
+    height: 274.5px;
+}
+.legal-notice {
+    position: absolute;
+    top: 244.14px;
+    left: 0px;
+    line-height: 100%;
+    display: inline-block;
+    width: 186.2px;
+    height: 30.3px;
+}
+.privace-policy {
+    position: absolute;
+    top: 173.79px;
+    left: 0px;
+    line-height: 100%;
+    display: inline-block;
+    width: 206.9px;
+    height: 30.3px;
+}
+.terms-of-use {
+    position: absolute;
+    top: 103.45px;
+    left: 0px;
+    line-height: 100%;
+    display: inline-block;
+    width: 194.5px;
+    height: 30.3px;
+}
+.legal1 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    font-size: 24px;
+    font-weight: 500;
+    font-family: Nohemi;
+    color: #313131;
+    display: inline-block;
+    width: 131px;
+    height: 34.5px;
+}
+.legal {
+    position: absolute;
+    top: 0px;
+    left: 1067.59px;
+    width: 206.9px;
+    height: 274.5px;
+}
+.feedback {
+    position: absolute;
+    top: 103.45px;
+    left: 0px;
+    line-height: 100%;
+    display: inline-block;
+    width: 149px;
+    height: 30.3px;
+}
+.links1 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    font-size: 24px;
+    font-weight: 500;
+    font-family: Nohemi;
+    color: #313131;
+    display: inline-block;
+    width: 133.8px;
+    height: 34.5px;
+}
+.links {
+    position: absolute;
+    top: 0px;
+    left: 1413.79px;
+    width: 206.9px;
+    height: 274.5px;
+}
+.we-use-multi-mic {
+    position: absolute;
+    top: 89.66px;
+    left: 0px;
+    display: inline-block;
+    width: 377.9px;
+    height: 111.7px;
+}
+.facebook-icon {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 55.2px;
+    height: 55.2px;
+}
+.instagram-icon {
+    position: absolute;
+    top: 0px;
+    left: 82.76px;
+    width: 55.2px;
+    height: 55.2px;
+}
+.linkedin-icon {
+    position: absolute;
+    top: 0px;
+    left: 170px;
+    width: 55.2px;
+    height: 55.2px;
+}
+.twitter-icon {
+    position: absolute;
+    top: 0px;
+    left: 165.52px;
+    width: 55.2px;
+    height: 55.2px;
+}
+.social {
+    position: absolute;
+    top: 231.72px;
+    left: 0px;
+    width: 303.4px;
+    height: 55.2px;
+}
+.fgecom {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    font-size: 25px;
+    letter-spacing: -0.06em;
+    display: inline-block;
+    color: #313131;
+    width: 212.4px;
+    height: 52.4px;
+}
+.we-use-multi-mic-and-echo-canc-parent {
+    position: absolute;
+    top: 2.76px;
+    left: 0px;
+    width: 377.9px;
+    height: 286.9px;
+    font-size: 18px;
+}
+.resources-parent {
+    position: absolute;
+    top: 0px;
+    left: 191.72px;
+    width: 1620.7px;
+    height: 289.7px;
+}
+.group-inner {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #c23535;
+    width: 1986.2px;
+    height: 55.2px;
+}
+.copyright-fgecom-all {
+    position: absolute;
+    top: 15.17px;
+    left: 787.59px;
+    display: inline-block;
+    width: 411px;
+    height: 29px;
+}
+.rectangle-group {
+    position: absolute;
+    top: 344.83px;
+    left: 0px;
+    width: 1986.2px;
+    height: 55.2px;
+    text-align: center;
+    font-size: 14px;
+    color: #fafafa;
+}
+.footer {
+    position: absolute;
+    top: 6501px;
+    left: -67.1px;
+    width: 1986.2px;
+    height: 400px;
+    text-align: left;
+    font-size: 22px;
+    color: #828282;
+}
+.rectangle-icon {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 50px;
+    width: 152px;
+    height: 58px;
+}
+.sign-up {
+    position: absolute;
+    top: 19px;
+    left: 48px;
+    font-weight: 500;
+}
+.vector-parent {
+    position: absolute;
+    top: -64px;
+    left: 850px;
+    width: 152px;
+    height: 58px;
+    font-family: Nohemi;
+}
+.asset-1-icon {
+    position: absolute;
+    height: 100%;
+    width: 43.26%;
+    top: 0%;
+    right: 56.74%;
+    bottom: 0%;
+    left: 0%;
+    max-width: 100%;
+    overflow: hidden;
+    max-height: 100%;
+    object-fit: cover;
+}
+.forum-geni1 {
+    line-height: 117.14%;
+    font-weight: 700;
+    font-family: Raleway;
+}
+.forum-geni-entreprises-container {
+    position: absolute;
+    height: 66.96%;
+    width: 52.13%;
+    top: 16.52%;
+    left: 47.87%;
+    letter-spacing: -0.06em;
+    display: inline-block;
+}
+.asset-1-parent {
+    position: absolute;
+    top: 67px;
+    left: 90px;
+    width: 282px;
+    height: 115px;
+    text-align: left;
+    font-size: 24px;
+    color: #14416d;
+    font-family: Nohemi;
+}
+.asset-9-1 {
+    position: absolute;
+    top: 302px;
+    left: calc(50% - 233px);
+    width: 466px;
+    height: 494px;
+    object-fit: cover;
+}
+.decorator-icon1 {
+    position: absolute;
+    top: 549px;
+    left: 1434px;
+    width: 376px;
+    height: 235px;
+}
+.decorator-icon2 {
+    position: absolute;
+    top: 753px;
+    left: 4px;
+    width: 376px;
+    height: 235px;
+    object-fit: contain;
+}
+.asset-2-2 {
+    position: absolute;
+    top: 0.16px;
+    left: 48.12px;
+    width: 42.8px;
+    height: 42.8px;
+    object-fit: cover;
+}
+.asset-3-icon {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 43.1px;
+    height: 43.1px;
+    object-fit: cover;
+}
+.asset-8-icon {
+    position: absolute;
+    top: 0px;
+    left: 95.91px;
+    width: 43.1px;
+    height: 43.1px;
+    object-fit: cover;
+}
+.asset-2-2-parent {
+    position: absolute;
+    top: 103px;
+    left: 1671px;
+    width: 139px;
+    height: 43.1px;
+}
+.asset-2-2-group {
+    position: absolute;
+    top: 5940px;
+    left: 891px;
+    width: 139px;
+    height: 43.1px;
+}
+.rectangle-div {
+    position: absolute;
+    top: 0px;
+    left: calc(50% - 1818px);
+    background-color: #f1f1f1;
+    width: 3636px;
+    height: 200px;
+}
+.group-icon {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 155.8px;
+}
+.group-icon1 {
+    position: absolute;
+    top: 0px;
+    left: 878.59px;
+    width: 155.8px;
+}
+.logo-child {
+    position: absolute;
+    top: 6px;
+    left: 235.85px;
+    width: 135px;
+}
+.logo-item {
+    position: absolute;
+    top: 6px;
+    left: 450.85px;
+    width: 148.5px;
+}
+.group-icon2 {
+    position: absolute;
+    top: 4px;
+    left: 679.32px;
+    width: 119.3px;
+}
+.logo {
+    position: absolute;
+    top: 84px;
+    left: 938px;
+    width: 1034.4px;
+}
+.logo1 {
+    position: absolute;
+    top: 84px;
+    left: 1817px;
+    width: 1034.4px;
+}
+.rectangle-container {
+    position: absolute;
+    top: 1149px;
+    left: calc(50% - 1818px);
+    width: 3636px;
+    height: 200px;
+}
+.the-place-where-container {
+    position: absolute;
+    top: 1609px;
+    left: calc(50% - 356px);
+    font-size: 32px;
+    line-height: 30px;
+    color: #14416d;
+    display: inline-block;
+    width: 712px;
+    height: 73px;
+}
+.span {
+    color: #398935;
+}
+.span1 {
+    color: #c23535;
+}
+.schools-1-container {
+    position: absolute;
+    top: 1526px;
+    left: calc(50% - 226px);
+    font-size: 40px;
+    line-height: 48px;
+    font-weight: 500;
+    display: inline-block;
+    width: 453px;
+    height: 80px;
+    color: #19406d;
+}
+.b {
+    position: absolute;
+    top: 94.68px;
+    left: 0px;
+    line-height: 100%;
+    display: inline-block;
+    width: 164.5px;
+    height: 159.5px;
+}
+.asset-2-22 {
+    position: absolute;
+    height: 64.13%;
+    width: 95.99%;
+    top: 35.88%;
+    right: 0%;
+    bottom: -0.01%;
+    left: 4.01%;
+    max-width: 100%;
+    overflow: hidden;
+    max-height: 100%;
+    object-fit: cover;
+}
+.group-child1 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    box-shadow: 0px 39.048160552978516px 28.23px rgba(56, 56, 56, 0.08), 0px 23.205764770507812px 15.35px rgba(56, 56, 56, 0.06), 0px 12.049147605895996px 7.83px rgba(56, 56, 56, 0.05), 0px 4.908912181854248px 3.93px rgba(56, 56, 56, 0.04), 0px 1.1156617403030396px 1.9px rgba(56, 56, 56, 0.02);
+    border-radius: 80px;
+    background-color: #fff;
+    border: 0.6px solid #f1f1f1;
+    box-sizing: border-box;
+    width: 540.5px;
+    height: 473.4px;
+}
+.rectangle-wrapper {
+    position: absolute;
+    top: 0px;
+    left: 197.67px;
+    width: 540.5px;
+    height: 473.4px;
+}
+.logo-inpt-1-icon {
+    position: absolute;
+    top: 130.87px;
+    left: 252px;
+    width: 431px;
+    height: 212px;
+    object-fit: cover;
+}
+.parent {
+    position: absolute;
+    top: 1848.13px;
+    left: 549px;
+    width: 823px;
+    height: 545.3px;
+    font-size: 96px;
+}
+.ellipse-icon {
+    position: absolute;
+    top: 174.42px;
+    left: 51.5px;
+    width: 694.4px;
+    height: 347.2px;
+    display: none;
+}
+.asset-8-icon2 {
+    position: absolute;
+    top: 180px;
+    left: 33px;
+    width: 790px;
+    height: 370px;
+    object-fit: cover;
+}
+.insea-logo-1-icon {
+    position: absolute;
+    top: 19px;
+    left: 70.33px;
+    width: 400px;
+    height: 436px;
+    object-fit: cover;
+}
+.vector-group {
+    position: absolute;
+    top: 2557px;
+    left: 549px;
+    width: 823px;
+    height: 550px;
+    font-size: 96px;
+}
+.asset-3-icon2 {
+    position: absolute;
+    top: 178px;
+    left: 33px;
+    width: 790px;
+    height: 370px;
+    object-fit: cover;
+}
+.ensias2-1-icon {
+    position: absolute;
+    top: 47px;
+    left: 242px;
+    width: 426px;
+    height: 362px;
+    object-fit: cover;
+}
+.group {
+    position: absolute;
+    top: 3266px;
+    left: 549px;
+    width: 823px;
+    height: 548px;
+    font-size: 96px;
+}
+.asset-10-icon1 {
+    position: absolute;
+    top: 2px;
+    left: 0px;
+    width: 43px;
+    height: 43px;
+    object-fit: cover;
+}
+.asset-11-icon {
+    position: absolute;
+    top: 0px;
+    left: 42px;
+    width: 48.9px;
+    height: 48.9px;
+    object-fit: contain;
+}
+.asset-7-icon1 {
+    position: absolute;
+    top: 2px;
+    left: 90px;
+    width: 42.9px;
+    height: 42.9px;
+    object-fit: cover;
+}
+.asset-10-parent {
+    position: absolute;
+    top: 4800px;
+    left: 894px;
+    width: 132.9px;
+    height: 48.9px;
+}
+.about-child {
+    position: absolute;
+    top: 0px;
+    left: 565px;
+    border-right: 1px solid #c23535;
+    box-sizing: border-box;
+    width: 1px;
+    height: 431px;
+}
+.card-child {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #fafafa;
+    border: 1px solid #e0e0e0;
+    box-sizing: border-box;
+    width: 192px;
+    height: 161px;
+}
+.entreprises2 {
+    position: absolute;
+    top: 58px;
+    left: 0px;
+    letter-spacing: -0.01em;
+}
+.div {
+    position: absolute;
+    top: 0px;
+    left: 17px;
+    font-size: 40px;
+    line-height: 48px;
+    font-weight: 500;
+    color: #313131;
+}
+.entreprises-parent {
+    position: absolute;
+    top: 28px;
+    left: 53px;
+    width: 86px;
+    height: 82px;
+}
+.card {
+    position: absolute;
+    top: 191px;
+    left: 232px;
+    width: 192px;
+    height: 161px;
+}
+.card-item {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    box-shadow: 0px 38.51852035522461px 25.48px rgba(56, 56, 56, 0.06), 0px 20px 13px rgba(56, 56, 56, 0.05), 0px 8.148148536682129px 6.52px rgba(56, 56, 56, 0.04), 0px 1.8518518209457397px 3.15px rgba(56, 56, 56, 0.02);
+    background-color: #fff;
+    width: 192px;
+    height: 161px;
+}
+.participants {
+    position: absolute;
+    top: 58px;
+    left: 18px;
+    letter-spacing: -0.01em;
+}
+.div1 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    font-size: 40px;
+    line-height: 48px;
+    font-weight: 500;
+    color: #313131;
+}
+.participants-parent {
+    position: absolute;
+    top: 28px;
+    left: 31px;
+    width: 131px;
+    height: 82px;
+}
+.card1 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 192px;
+    height: 161px;
+}
+.cards {
+    position: absolute;
+    top: 29px;
+    left: 625px;
+    width: 424px;
+    height: 352px;
+}
+.les-club-forum-container {
+    position: absolute;
+    top: 78px;
+    left: 0px;
+    line-height: 30px;
+    display: inline-block;
+    width: 476px;
+}
+.about-us {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    font-size: 40px;
+    line-height: 48px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #313131;
+}
+.bout-content {
+    position: absolute;
+    top: 21px;
+    left: 0px;
+    width: 476px;
+    height: 258px;
+    text-align: left;
+    color: #425466;
+}
+.about {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1049px;
+    height: 430px;
+}
+.about-wrapper {
+    position: absolute;
+    top: 4200px;
+    left: 436px;
+    width: 1049px;
+    height: 430px;
+    color: #61646b;
+}
+.group-child4 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    box-shadow: 0px 100px 80px rgba(56, 56, 56, 0.1), 0px 64.81481170654297px 46.85px rgba(56, 56, 56, 0.08), 0px 38.51852035522461px 25.48px rgba(56, 56, 56, 0.06), 0px 20px 13px rgba(56, 56, 56, 0.05), 0px 8.148148536682129px 6.52px rgba(56, 56, 56, 0.04), 0px 1.8518518209457397px 3.15px rgba(56, 56, 56, 0.02);
+    border-radius: 30px;
+    background-color: #224272;
+    width: 150px;
+    height: 54px;
+}
+.learn-more {
+    position: absolute;
+    top: 17px;
+    left: 24px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+.rectangle-parent1 {
+    position: absolute;
+    top: 4438px;
+    left: 436px;
+    width: 150px;
+    height: 54px;
+    color: #fafafa;
+    font-family: Nohemi;
+}
+.community-development-is {
+    position: absolute;
+    top: 4829.46px;
+    left: calc(50% - 477px);
+    line-height: 30px;
+    color: #425466;
+    display: inline-block;
+    width: 953.3px;
+    height: 88.8px;
+}
+.what-our-clients {
+    position: absolute;
+    top: 4900px;
+    left: calc(50% - 370px);
+    font-size: 40px;
+    line-height: 48px;
+    text-transform: uppercase;
+    font-weight: 500;
+    text-align: left;
+    display: inline-block;
+    height: 71px;
+}
+.base {
+    position: absolute;
+    top: 5036.69px;
+    left: 206.09px;
+    background-color: #f1f1f1;
+    width: 1509.8px;
+    height: 799.3px;
+}
+.arrow-icon {
+    position: absolute;
+    top: 5619.89px;
+    left: 872.19px;
+    width: 177.6px;
+    height: 97.7px;
+}
+.base1 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #fff;
+    width: 562.5px;
+    height: 417.4px;
+}
+.mansur {
+    position: absolute;
+    top: 266.44px;
+    left: 1.48px;
+    font-weight: 600;
+    color: #313131;
+    display: inline-block;
+    width: 79.9px;
+    height: 31.1px;
+}
+.founder-google {
+    position: absolute;
+    top: 304.92px;
+    left: 1.48px;
+    font-size: 10px;
+    line-height: 100%;
+    display: inline-block;
+    width: 137.7px;
+    height: 14.8px;
+}
+.yet-preference-connection {
+    position: absolute;
+    top: 53.29px;
+    left: 0px;
+    font-size: 16px;
+    line-height: 30px;
+    display: inline-block;
+    width: 467.7px;
+    height: 177.6px;
+}
+.stars-icon {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 149.5px;
+    height: 25.5px;
+}
+.mansur-parent {
+    position: absolute;
+    top: 59.21px;
+    left: 47.37px;
+    width: 467.7px;
+    height: 319.7px;
+}
+.testimonial-card {
+    position: absolute;
+    top: 5156.58px;
+    left: 1301.45px;
+    box-shadow: 0px 30px 30px rgba(99, 122, 166, 0.1);
+    width: 562.5px;
+    height: 417.4px;
+    text-align: left;
+    font-size: 14px;
+    color: #425466;
+}
+.decorator6 {
+    position: absolute;
+    top: 5126px;
+    left: 234px;
+    filter: blur(600px);
+    border-radius: 50%;
+    background-color: #398935;
+    width: 334px;
+    height: 334px;
+}
+.decorator8 {
+    position: absolute;
+    top: 5574px;
+    left: 1605px;
+    filter: blur(600px);
+    border-radius: 50%;
+    background-color: #c23535;
+    width: 334px;
+    height: 334px;
+}
+.base2 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    box-shadow: 0px 38.51852035522461px 25.48px rgba(56, 56, 56, 0.06), 0px 20px 13px rgba(56, 56, 56, 0.05), 0px 8.148148536682129px 6.52px rgba(56, 56, 56, 0.04), 0px 1.8518518209457397px 3.15px rgba(56, 56, 56, 0.02);
+    background-color: #fff;
+    width: 562.5px;
+    height: 417.4px;
+}
+.sam {
+    position: absolute;
+    top: 325.65px;
+    left: 47.37px;
+    font-weight: 600;
+    color: #313131;
+    display: inline-block;
+    width: 48.8px;
+    height: 31.1px;
+}
+.founder-migelko {
+    position: absolute;
+    top: 364.13px;
+    left: 47.37px;
+    font-size: 10px;
+    line-height: 100%;
+    display: inline-block;
+    width: 140.6px;
+    height: 14.8px;
+}
+.yet-preference-connection1 {
+    position: absolute;
+    top: 112.5px;
+    left: 47.37px;
+    font-size: 16px;
+    line-height: 30px;
+    display: inline-block;
+    width: 473.7px;
+    height: 177.6px;
+}
+.stars-icon1 {
+    position: absolute;
+    top: 59.21px;
+    left: 47.37px;
+    width: 149.5px;
+    height: 25.5px;
+}
+.testimonial-card1 {
+    position: absolute;
+    top: 5156.58px;
+    left: 679.76px;
+    width: 562.5px;
+    height: 417.4px;
+    text-align: left;
+    font-size: 14px;
+    color: #425466;
+}
+.sabo-masties {
+    position: absolute;
+    top: 325.65px;
+    left: 47.37px;
+    font-weight: 600;
+    color: #313131;
+    display: inline-block;
+    width: 142.1px;
+    height: 31.1px;
+}
+.founder-rolex {
+    position: absolute;
+    top: 364.13px;
+    left: 47.37px;
+    font-size: 10px;
+    line-height: 100%;
+    display: inline-block;
+    width: 122.9px;
+    height: 14.8px;
+}
+.yet-preference-connection2 {
+    position: absolute;
+    top: 112.5px;
+    left: 47.37px;
+    font-size: 16px;
+    line-height: 30px;
+    display: inline-block;
+    width: 479.6px;
+    height: 177.6px;
+}
+.testimonial-card2 {
+    position: absolute;
+    top: 5156.58px;
+    left: 58.07px;
+    box-shadow: 0px 30px 30px rgba(99, 122, 166, 0.1);
+    width: 562.5px;
+    height: 417.4px;
+    text-align: left;
+    font-size: 14px;
+    color: #425466;
+}
+.asset-5-icon {
+    position: absolute;
+    top: 3513px;
+    left: 1630px;
+    width: 580px;
+    height: 580px;
+    object-fit: cover;
+}
+.asset-6-icon {
+    position: absolute;
+    top: 1742px;
+    left: 1629px;
+    width: 581px;
+    height: 581px;
+    object-fit: cover;
+}
+.group-child5 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    box-shadow: 0px 100px 80px rgba(56, 56, 56, 0.1), 0px 64.81481170654297px 46.85px rgba(56, 56, 56, 0.08), 0px 38.51852035522461px 25.48px rgba(56, 56, 56, 0.06), 0px 20px 13px rgba(56, 56, 56, 0.05), 0px 8.148148536682129px 6.52px rgba(56, 56, 56, 0.04), 0px 1.8518518209457397px 3.15px rgba(56, 56, 56, 0.02);
+    background-color: #fff;
+    width: 652.4px;
+    height: 106.5px;
+}
+.staff-membre {
+    position: absolute;
+    top: 39.94px;
+    left: 37.28px;
+    line-height: 20px;
+    font-weight: 500;
+    display: inline-block;
+    width: 267.6px;
+    height: 26.6px;
+}
+.group-child6 {
+    position: absolute;
+    top: 0.05px;
+    left: 439.2px;
+    background-color: #398935;
+    width: 214.4px;
+    height: 106.5px;
+}
+.log-in {
+    position: absolute;
+    top: 40.05px;
+    left: 500.2px;
+    line-height: 20px;
+    font-weight: 500;
+    color: #fff;
+    display: inline-block;
+    height: 27px;
+    text-decoration: none;
+    
+}
+.rectangle-parent2 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 653.6px;
+    height: 106.6px;
+}
+.group-wrapper {
+    position: absolute;
+    top: 6087.95px;
+    left: 633.8px;
+    width: 653.6px;
+    height: 106.6px;
+    text-align: left;
+    color: #a5a5a5;
+}
+.decorator-icon3 {
+    position: absolute;
+    top: 6360.88px;
+    left: 1300px;
+    width: 500.6px;
+    height: 312.9px;
+}
+.decorator-icon4 {
+    position: absolute;
+    top: 4955.88px;
+    left: 1522px;
+    width: 500.6px;
+    height: 312.9px;
+}
+.asset-6-icon1 {
+    position: absolute;
+    top: 5545px;
+    left: -85px;
+    width: 581px;
+    height: 581px;
+    object-fit: cover;
+}
+.decorator-parent {
+    width: 100%;
+    position: relative;
+    background-color: #fff;
+    height: 6901px;
+    overflow: hidden;
+    text-align: center;
+    font-size: 16px;
+    color: #313131;
+    font-family: Poppins;
+}
+
+*{
+    font-family: Montserrat;
+}

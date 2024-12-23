@@ -1,4 +1,4 @@
-# from flask import Flask, render_template, request, redirect, flash
+
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, redirect, url_for, render_template, session, flash
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -116,7 +116,7 @@ def add_member():
         
         
         selected_cellules = request.form.getlist('Cellule_id')
-        # print(selected_cellules)
+       
     
        
         chief_cellules = {key: value for key, value in request.form.items() if key.startswith("chief_")}
@@ -269,18 +269,18 @@ def add_sponsor():
         selected_years = request.form.getlist('year')
         print(selected_years)
     
-        # Check if the sponsor already exists
+        
         existing_sponsor = entreprise.query.filter_by(Ent_Nom=sponsor_name).first()
         if not existing_sponsor:
             
             new_entreprise = entreprise(Ent_Nom=sponsor_name)
             db.session.add(new_entreprise)
-            db.session.flush()  # Flush to get the new entreprise ID
+            db.session.flush()  
             entreprise_id = new_entreprise.Entreprise_id
         else:
             entreprise_id = existing_sponsor.Entreprise_id
 
-        # Add entries to the sponsoriser table
+        
         for year in selected_years:
             new_sponsorship = sponsoriser(
                 Year=int(year),
@@ -289,12 +289,12 @@ def add_sponsor():
             )
             db.session.add(new_sponsorship)
 
-        # Commit changes to the database
+        
         db.session.commit()
         flash("Sponsor successfully added!", "success")
         return redirect('/sponsors')
 
-    # Fetch all years from the evenement table
+    
     years = [row[0] for row in db.session.query(evenement.Year).distinct()]
 
     return render_template('add_sponsor.html', years=years)
@@ -309,19 +309,19 @@ def edit_sponsor(id):
         sponsor_name = request.form.get('sponsor_name')
         selected_years = request.form.getlist('year')
         
-        # Update sponsor name if changed
+        
         sponsor.Ent_Nom = sponsor_name
         
-        # Get current sponsorships for this sponsor
+        
         current_sponsorships = sponsoriser.query.filter_by(Entreprise_id=id).all()
         current_years = {s.Year for s in current_sponsorships}
         
-        # Remove sponsorships for years that are no longer selected
+        
         for sponsorship in current_sponsorships:
             if str(sponsorship.Year) not in selected_years:
                 db.session.delete(sponsorship)
         
-        # Add or update sponsorships for selected years
+        
         for year in selected_years:
             year_int = int(year)
             sponsorship = sponsoriser.query.filter_by(
@@ -330,10 +330,10 @@ def edit_sponsor(id):
             ).first()
             
             if sponsorship:
-                # Update existing sponsorship type
+                
                 sponsorship.Sponsor_type = request.form.get(f'sponsor_type_{year}')
             else:
-                # Create new sponsorship
+                
                 new_sponsorship = sponsoriser(
                     Year=year_int,
                     Entreprise_id=id,
@@ -348,15 +348,15 @@ def edit_sponsor(id):
         except Exception as e:
             db.session.rollback()
             flash("An error occurred while updating the sponsor.", "error")
-            print(e)  # For debugging
+            print(e)  
             return redirect(f'/sponsors/edit_sponsor/{id}')
     
-    # Get current sponsorships for pre-filling the form
+    
     current_sponsorships = sponsoriser.query.filter_by(Entreprise_id=id).all()
     sponsor_years = [str(s.Year) for s in current_sponsorships]
     sponsor_types = {str(s.Year): s.Sponsor_type for s in current_sponsorships}
     
-    # Fetch all years from the evenement table
+    
     years = [str(row[0]) for row in db.session.query(evenement.Year).distinct()]
     
     return render_template('edit_sponsor.html', sponsor=sponsor, sponsor_years=sponsor_years, sponsor_types=sponsor_types,years=years)
