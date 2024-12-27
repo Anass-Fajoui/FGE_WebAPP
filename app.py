@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SECRET_KEY'] = 'AnassLpro165'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:rmaocsfwy8?Lqs@localhost/fge'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:anasslpro@localhost/fge'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
