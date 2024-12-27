@@ -190,6 +190,10 @@ body {
     height: 693px;
     object-fit: cover;
 }
+#edition{
+    font-weight: bold;
+    font-size: 20px;
+}
 .jeunesse-et-innovation {
     margin: 0;
 }
@@ -1356,5 +1360,5 @@ body {
 }
 
 *{
-    font-family: Nohemi;
+    font-family: Montserrat;
 }
