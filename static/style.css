@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Gloock&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 * {
+    
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -19,7 +19,7 @@ body {
 }
 
 /* Responsive Typography */
-@media (max-width: 768px) {
+@media (max-width: 800px) {
     body {
         font-size: 14px;
     }
@@ -631,7 +631,7 @@ body {
 .asset-2-2-parent {
     position: absolute;
     top: 103px;
-    left: 1671px;
+    left: 1620px;
     width: 139px;
     height: 43.1px;
 }
@@ -1356,5 +1356,5 @@ body {
 }
 
 *{
-    font-family: Montserrat;
+    font-family: Nohemi;
 }
