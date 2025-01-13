@@ -124,9 +124,7 @@ def add_member():
         
         for cellule_id in selected_cellules:
             est_chef = True if f"chief_{cellule_id}" in chief_cellules else False
-            print()
-            print(f"Membre_id: {new_member.Membre_id}")
-            print()
+           
             inscription = s_inscrire(Membre_id=new_member.Membre_id, Cellule_id=int(cellule_id), EstChef=est_chef)
         
             db.session.add(inscription)
