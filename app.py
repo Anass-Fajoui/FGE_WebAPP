@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SECRET_KEY'] = 'AnassLpro165'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:rmaocsfwy8?Lqs@localhost/fge'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:anasslpro@localhost/fge'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
@@ -113,7 +113,7 @@ def add_member():
        
         new_member = Membre(Nom=nom, Prenom=prenom, Email=email, Role=role, Club_id=club_id)
         db.session.add(new_member)
-        
+        db.session.flush()
         
         selected_cellules = request.form.getlist('Cellule_id')
        
@@ -124,8 +124,11 @@ def add_member():
         
         for cellule_id in selected_cellules:
             est_chef = True if f"chief_{cellule_id}" in chief_cellules else False
-            
+            print()
+            print(f"Membre_id: {new_member.Membre_id}")
+            print()
             inscription = s_inscrire(Membre_id=new_member.Membre_id, Cellule_id=int(cellule_id), EstChef=est_chef)
+        
             db.session.add(inscription)
     
         try:
@@ -215,7 +218,7 @@ def edit_member(id):
     )
 
 
-@app.route('/members/delete_member/<int:id>', methods=['GET', 'POST'])
+@app.route('/members/delete_member/<int:id>')
 @login_required
 def delete_member(id):
     s_inscrire.query.filter_by(Membre_id=id).delete()
