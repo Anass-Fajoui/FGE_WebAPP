@@ -28,7 +28,7 @@
    Open your MySQL Workbench and import the database file `fge.sql` from the repository.  
   
 4. **Run the Web App**  
-   Open a new terminal, navigate to the repository folder:
+   Make sure you are in the repository folder, if not:
    ```bash
    cd FGE_WebAPP
    ```
@@ -40,13 +40,13 @@
 
 5. **Access the Web App**  
    Open a web browser and go to the displayed URL to access and use the web app.
-   Or in the terminal just  "ctrl+click" or maybe "alt+click"
+   Or in the terminal just  `ctrl+click` or maybe `alt+click`
 
 ---
 
-### Notes
+### NB
 
-- Update the database configuration in the code (e.g., username, password, database name) in the `app.py` .
+- Update the database configuration in the `app.py` (e.g., username, password, database name) .
 
 Enjoy exploring the web app!
 
