@@ -47,6 +47,7 @@
 ### NB
 
 - Update the database configuration in the `app.py` (e.g., username, password, database name) .
+- The credentials for accessing the dashboard are: `admin` as the username and `yourpassword` as the password.
 
-Enjoy exploring the web app!
+### Enjoy exploring the web app!
 
