@@ -54,7 +54,7 @@
 ## App Screenshots
 
 <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-  <img src="./Screenshots/Screenshot1.png" alt="Screenshot 1" width="200">
+  <img src="./Screenshots/screenshot1.png" alt="Screenshot 1" width="200">
   <img src="./Screenshots/Screenshot2.png" alt="Screenshot 2" width="200">
   <img src="./Screenshots/Screenshot3.png" alt="Screenshot 3" width="200">
   <img src="./Screenshots/Screenshot4.png" alt="Screenshot 4" width="200">
