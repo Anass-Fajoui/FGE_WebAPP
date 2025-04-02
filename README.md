@@ -49,5 +49,22 @@
 - Update the database configuration in the `app.py` (e.g., username, password, database name) .
 - The credentials for accessing the dashboard are: `admin` as the username and `yourpassword` as the password.
 
-### Enjoy exploring the web app!
+# Movie Scout App - Screenshot Collection
+
+## App Screenshots
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px;">
+  <img src="./Screenshots/Screenshot1.png" alt="Screenshot 1" width="200">
+  <img src="./Screenshots/Screenshot2.png" alt="Screenshot 2" width="200">
+  <img src="./Screenshots/Screenshot3.png" alt="Screenshot 3" width="200">
+  <img src="./Screenshots/Screenshot4.png" alt="Screenshot 4" width="200">
+  <img src="./Screenshots/Screenshot5.png" alt="Screenshot 5" width="200">
+  <img src="./Screenshots/Screenshot6.png" alt="Screenshot 6" width="200">
+  <img src="./Screenshots/Screenshot7.png" alt="Screenshot 7" width="200">
+  <img src="./Screenshots/Screenshot8.png" alt="Screenshot 8" width="200">
+  <img src="./Screenshots/Screenshot9.png" alt="Screenshot 9" width="200">
+  <img src="./Screenshots/Screenshot10.png" alt="Screenshot 10" width="200">
+  <img src="./Screenshots/Screenshot11.png" alt="Screenshot 11" width="200">
+</div>
+
 
