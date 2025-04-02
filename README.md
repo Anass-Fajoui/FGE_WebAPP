@@ -49,9 +49,7 @@
 - Update the database configuration in the `app.py` (e.g., username, password, database name) .
 - The credentials for accessing the dashboard are: `admin` as the username and `yourpassword` as the password.
 
-# Movie Scout App - Screenshot Collection
-
-## App Screenshots
+# FGE Web App- Screenshot Collection
 
 <div style="display: flex; flex-wrap: wrap; gap: 10px;">
   <img src="./Screenshots/screenshot1.png" alt="Screenshot 1" width="200">
