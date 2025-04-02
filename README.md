@@ -52,36 +52,36 @@
 # FGE Web App- Screenshot Collection
 
 ### Screenshot 1
-![Screenshot 1](./assets/Screenshot1.png)
+![Screenshot 1](./Screenshots/Screenshot1.png)
 
 ### Screenshot 2
-![Screenshot 2](./assets/Screenshot2.png)
+![Screenshot 2](./Screenshots/Screenshot2.png)
 
 ### Screenshot 3
-![Screenshot 3](./assets/Screenshot3.png)
+![Screenshot 3](./Screenshots/Screenshot3.png)
 
 ### Screenshot 4
-![Screenshot 4](./assets/Screenshot4.png)
+![Screenshot 4](./Screenshots/Screenshot4.png)
 
 ### Screenshot 5
-![Screenshot 5](./assets/Screenshot5.png)
+![Screenshot 5](./Screenshots/Screenshot5.png)
 
 ### Screenshot 6
-![Screenshot 6](./assets/Screenshot6.png)
+![Screenshot 6](./Screenshots/Screenshot6.png)
 
 ### Screenshot 7
-![Screenshot 7](./assets/Screenshot7.png)
+![Screenshot 7](./Screenshots/Screenshot7.png)
 
 ### Screenshot 8
-![Screenshot 8](./assets/Screenshot8.png)
+![Screenshot 8](./Screenshots/Screenshot8.png)
 
 ### Screenshot 9
-![Screenshot 9](./assets/Screenshot9.png)
+![Screenshot 9](./Screenshots/Screenshot9.png)
 
 ### Screenshot 10
-![Screenshot 10](./assets/Screenshot10.png)
+![Screenshot 10](./Screenshots/Screenshot10.png)
 
 ### Screenshot 11
-![Screenshot 11](./assets/Screenshot11.png)
+![Screenshot 11](./Screenshots/Screenshot11.png)
 
 
