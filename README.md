@@ -51,18 +51,37 @@
 
 # FGE Web App- Screenshot Collection
 
-<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-  <img src="./Screenshots/screenshot1.png" alt="Screenshot 1" width="200">
-  <img src="./Screenshots/Screenshot2.png" alt="Screenshot 2" width="200">
-  <img src="./Screenshots/Screenshot3.png" alt="Screenshot 3" width="200">
-  <img src="./Screenshots/Screenshot4.png" alt="Screenshot 4" width="200">
-  <img src="./Screenshots/Screenshot5.png" alt="Screenshot 5" width="200">
-  <img src="./Screenshots/Screenshot6.png" alt="Screenshot 6" width="200">
-  <img src="./Screenshots/Screenshot7.png" alt="Screenshot 7" width="200">
-  <img src="./Screenshots/Screenshot8.png" alt="Screenshot 8" width="200">
-  <img src="./Screenshots/Screenshot9.png" alt="Screenshot 9" width="200">
-  <img src="./Screenshots/Screenshot10.png" alt="Screenshot 10" width="200">
-  <img src="./Screenshots/Screenshot11.png" alt="Screenshot 11" width="200">
-</div>
+### Screenshot 1
+![Screenshot 1](./assets/Screenshot1.png)
+
+### Screenshot 2
+![Screenshot 2](./assets/Screenshot2.png)
+
+### Screenshot 3
+![Screenshot 3](./assets/Screenshot3.png)
+
+### Screenshot 4
+![Screenshot 4](./assets/Screenshot4.png)
+
+### Screenshot 5
+![Screenshot 5](./assets/Screenshot5.png)
+
+### Screenshot 6
+![Screenshot 6](./assets/Screenshot6.png)
+
+### Screenshot 7
+![Screenshot 7](./assets/Screenshot7.png)
+
+### Screenshot 8
+![Screenshot 8](./assets/Screenshot8.png)
+
+### Screenshot 9
+![Screenshot 9](./assets/Screenshot9.png)
+
+### Screenshot 10
+![Screenshot 10](./assets/Screenshot10.png)
+
+### Screenshot 11
+![Screenshot 11](./assets/Screenshot11.png)
 
 
