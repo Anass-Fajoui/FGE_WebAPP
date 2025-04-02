@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
-
+ 
 class Membre(db.Model):
     __tablename__ = 'Membre'
 

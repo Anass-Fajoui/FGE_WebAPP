@@ -113,7 +113,7 @@ def add_member():
        
         new_member = Membre(Nom=nom, Prenom=prenom, Email=email, Role=role, Club_id=club_id)
         db.session.add(new_member)
-        
+        db.session.flush()
         
         selected_cellules = request.form.getlist('Cellule_id')
        
@@ -124,8 +124,9 @@ def add_member():
         
         for cellule_id in selected_cellules:
             est_chef = True if f"chief_{cellule_id}" in chief_cellules else False
-            
+           
             inscription = s_inscrire(Membre_id=new_member.Membre_id, Cellule_id=int(cellule_id), EstChef=est_chef)
+        
             db.session.add(inscription)
     
         try:
@@ -215,7 +216,11 @@ def edit_member(id):
     )
 
 
+<<<<<<< HEAD
 @app.route('/members/delete_member/<int:id>', methods=['GET', 'DELETE'])
+=======
+@app.route('/members/delete_member/<int:id>')
+>>>>>>> 9d52e7d0d6dde4588c48f22454eefdc78252b47b
 @login_required
 def delete_member(id):
     s_inscrire.query.filter_by(Membre_id=id).delete()
