@@ -215,7 +215,7 @@ def edit_member(id):
     )
 
 
-@app.route('/members/delete_member/<int:id>', methods=['GET', 'POST'])
+@app.route('/members/delete_member/<int:id>', methods=['GET', 'DELETE'])
 @login_required
 def delete_member(id):
     s_inscrire.query.filter_by(Membre_id=id).delete()
@@ -363,7 +363,7 @@ def edit_sponsor(id):
 
 
 
-@app.route('/sponsors/delete_sponsor/<int:id>', methods=['GET', 'POST'])
+@app.route('/sponsors/delete_sponsor/<int:id>', methods=['GET', 'DELETE'])
 @login_required
 def delete_sponsor(id):
     sponsor = entreprise.query.get(id)
@@ -443,7 +443,7 @@ def edit_event(id):
     
     return render_template('edit_event.html', event=event)
 
-@app.route('/events/delete_event/<int:id>', methods=['GET', 'POST'])
+@app.route('/events/delete_event/<int:id>', methods=['GET', 'DELETE'])
 @login_required
 def delete_event(id):
     event = evenement.query.get(id)
